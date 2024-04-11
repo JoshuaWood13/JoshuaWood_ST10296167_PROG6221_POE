@@ -9,12 +9,13 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
     public class RecipeClass
     {
         private string[] stepArray;
+        private IngredientsClass[] ingredientArray;
 //------------------------------------------------------------------------------------------------------------------------------------------//
         private static string recipeMenu()
         {
             string choice;
 
-            Console.WriteLine("====== RECIPE GENERATOR ======\n");
+            Console.WriteLine("====== RECIPE GENERATOR MENU ======\n");
             Console.WriteLine("1) Enter recipe details");
             Console.WriteLine("2) Display recipe");
             Console.WriteLine("3) Scale recipe");
@@ -51,7 +52,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                         break;
 
                     case "2":
-
+                        displayRecipe();
                         break;
 
                     case "3":
@@ -106,18 +107,18 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             ingredientNum = validNum(Console.ReadLine());
             Console.WriteLine();
             Console.WriteLine("--------------------------------");
-            IngredientsClass[] ingredient = new IngredientsClass[ingredientNum];
+            ingredientArray = new IngredientsClass[ingredientNum];
             for(int i = 0; i < ingredientNum; i++)
             {
                 string unitDecision;
-                ingredient[i] = new IngredientsClass();
+                ingredientArray[i] = new IngredientsClass();
                 Console.Write($"Enter ingredient {count} name: ");
-                ingredient[i].ingredientName = Console.ReadLine();
+                ingredientArray[i].ingredientName = Console.ReadLine();
                 Console.Write($"Enter ingredient {count} quantity: ");
-                ingredient[i].ingredientQuantity = validNum(Console.ReadLine());
+                ingredientArray[i].ingredientQuantity = validNum(Console.ReadLine());
                 Console.WriteLine();
-                unitDecision = ingredient[i].decideUnit();
-                ingredient[i].assignUnit(ingredient[i],unitDecision);
+                unitDecision = ingredientArray[i].decideUnit();
+                ingredientArray[i].assignUnit(ingredientArray[i],unitDecision);
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------");
                 count++;
@@ -137,5 +138,26 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
+        private void displayRecipe()
+        {
+            Console.WriteLine();
+            Console.WriteLine("---------FULL RECIPE---------");
+            Console.WriteLine("Ingredients:");
+            int count = 1;
+            foreach(IngredientsClass i in ingredientArray)
+            {
+                Console.WriteLine($"{count}. {i.measurementUnitValue} {i.measurementUnitName}(s) of {i.ingredientName}");
+                count++;
+            }
+            Console.WriteLine();
+            Console.WriteLine("Steps:");
+            foreach (string x in stepArray)
+            {
+                Console.WriteLine($"{count}. {x}");
+                count++;
+            }
+            Console.WriteLine("--------------------------------");
+            Console.WriteLine();
+        }
     }
 }
