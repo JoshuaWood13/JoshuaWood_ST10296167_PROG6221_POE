@@ -8,7 +8,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 {
     public class RecipeClass
     {
-
+        private string[] stepArray;
 //------------------------------------------------------------------------------------------------------------------------------------------//
         private static string recipeMenu()
         {
@@ -96,6 +96,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         private void inputRecipeDetails()
         {
             int ingredientNum;
+            int steps;
             int count = 1;
 
             Console.WriteLine();
@@ -113,8 +114,17 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 ingredient[i].ingredientName = Console.ReadLine();
                 Console.Write($"Enter ingredient {count} quantity: ");
                 ingredient[i].ingredientQuantity = validNum(Console.ReadLine());
+                Console.WriteLine();
                 unitDecision = ingredient[i].decideUnit();
+                ingredient[i].assignUnit(ingredient[i],unitDecision);
+                Console.WriteLine();
+                Console.Write("Enter number of recipe steps: ");
+                steps = validNum(Console.ReadLine());
+                stepArray = new string[steps];
+                for(int j = 0; j < steps; j++)
+                {
 
+                }
 
             }
         }

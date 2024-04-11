@@ -10,9 +10,10 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
     {
         public string ingredientName {  get; set; }
         public double ingredientQuantity { get; set; }
-        public string measurementUnit { get; set; }
+        public string measurementUnitName { get; set; }
+        public double measurementUnitValue { get; set; }
 
-//------------------------------------------------------------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------------------------------------------//
         public string decideUnit()
         {
             string choice;
@@ -41,7 +42,37 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             return choice;
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        public void assignUnit(IngredientsClass i, string input)
+        {
+            switch(input)
+            {
+                case "1":
+                    i.measurementUnitName = "tsp";
+                    i.measurementUnitValue = i.ingredientQuantity * 5;
+                    break;
 
+                case "2":
+                    i.measurementUnitName = "tbsp";
+                    i.measurementUnitValue = i.ingredientQuantity * 15;
+                    break;
+
+                case "3":
+                    i.measurementUnitName = "C";
+                    i.measurementUnitValue = i.ingredientQuantity * 250;
+                    break;
+
+                case "4":
+                    i.measurementUnitName = "g";
+                    i.measurementUnitValue = i.ingredientQuantity * 1;
+                    break;
+
+                case "5":
+                    i.measurementUnitName = "kg";
+                    i.measurementUnitValue = i.ingredientQuantity * 1000;
+                    break;
+            }
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
         private static bool validChoice(string choice)
         {
             int num;
