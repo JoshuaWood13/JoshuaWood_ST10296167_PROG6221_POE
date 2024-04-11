@@ -13,17 +13,17 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         private static string recipeMenu()
         {
             string choice;
+
+            Console.WriteLine("====== RECIPE GENERATOR ======\n");
+            Console.WriteLine("1) Enter recipe details");
+            Console.WriteLine("2) Display recipe");
+            Console.WriteLine("3) Scale recipe");
+            Console.WriteLine("4) Reset recipe");
+            Console.WriteLine("5) Clear recipe");
+            Console.WriteLine("6) Quit");
+            Console.WriteLine();
             do
             {
-                Console.WriteLine("====== RECIPE GENERATOR ======\n");
-                //Console.WriteLine("Please select an option");
-                Console.WriteLine("1) Enter recipe details");
-                Console.WriteLine("2) Display recipe");
-                Console.WriteLine("3) Scale recipe");
-                Console.WriteLine("4) Reset recipe");
-                Console.WriteLine("5) Clear recipe");
-                Console.WriteLine("6) Quit");                                                                                       
-                Console.WriteLine();
                 Console.Write("Enter choice: ");
                 choice = Console.ReadLine();
 
@@ -47,7 +47,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 switch (choice)
                 {
                     case "1":
-
+                        inputRecipeDetails();
                         break;
 
                     case "2":
@@ -86,7 +86,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             int result;
             while(!int.TryParse(input, out result))
             {
-                Console.WriteLine("Please enter a valid number: ");
+                Console.Write("Please enter a valid number: ");
                 input = Console.ReadLine();
             }
             return result;
@@ -96,12 +96,27 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         private void inputRecipeDetails()
         {
             int ingredientNum;
+            int count = 1;
 
             Console.WriteLine();
-            Console.WriteLine("----------------------------------");
-            Console.WriteLine("Number of ingredients in recipe: ");
+            Console.WriteLine("---------RECIPE DETAILS---------");
+            Console.WriteLine();
+            Console.Write("Enter number of ingredients in recipe: ");
             ingredientNum = validNum(Console.ReadLine());
-            
+            //Console.WriteLine();
+            IngredientsClass[] ingredient = new IngredientsClass[ingredientNum];
+            for(int i = 0; i < ingredientNum; i++)
+            {
+                string unitDecision;
+                ingredient[i] = new IngredientsClass();
+                Console.Write($"Enter ingredient {count} name: ");
+                ingredient[i].ingredientName = Console.ReadLine();
+                Console.Write($"Enter ingredient {count} quantity: ");
+                ingredient[i].ingredientQuantity = validNum(Console.ReadLine());
+                unitDecision = ingredient[i].decideUnit();
+
+
+            }
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
     }
