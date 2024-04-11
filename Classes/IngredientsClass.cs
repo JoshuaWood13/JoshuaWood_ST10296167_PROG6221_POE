@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 {
-    public class Ingredients
+    public class IngredientsClass
     {
         public string ingredientName {  get; set; }
         public double ingredientQuantity { get; set; }
