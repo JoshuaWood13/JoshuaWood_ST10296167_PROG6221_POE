@@ -67,7 +67,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                         break;
 
                     case "6":
-
+                        Environment.Exit(0);
                         break;
                 }
             }
@@ -104,7 +104,8 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.WriteLine();
             Console.Write("Enter number of ingredients in recipe: ");
             ingredientNum = validNum(Console.ReadLine());
-            //Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("--------------------------------");
             IngredientsClass[] ingredient = new IngredientsClass[ingredientNum];
             for(int i = 0; i < ingredientNum; i++)
             {
@@ -118,14 +119,21 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 unitDecision = ingredient[i].decideUnit();
                 ingredient[i].assignUnit(ingredient[i],unitDecision);
                 Console.WriteLine();
-                Console.Write("Enter number of recipe steps: ");
-                steps = validNum(Console.ReadLine());
-                stepArray = new string[steps];
-                for(int j = 0; j < steps; j++)
-                {
-
-                }
-
+                Console.WriteLine("--------------------------------");
+                count++;
+            }
+            Console.WriteLine();
+            Console.Write("Enter number of recipe steps: ");
+            steps = validNum(Console.ReadLine());
+            Console.WriteLine();
+            stepArray = new string[steps];
+            count = 1;
+            for (int j = 0; j < steps; j++)
+            {
+                Console.WriteLine($"Please type step {count} below:");
+                stepArray[j] = Console.ReadLine();
+                Console.WriteLine();
+                count++;
             }
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
