@@ -63,7 +63,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
                 case "3":
                     i.measurementUnitName = "C";
-                    i.measurementUnitMl = i.ingredientQuantity * 250;
+                    i.measurementUnitMl = i.ingredientQuantity * 240;
                     break;
 
                 case "4":

@@ -60,11 +60,11 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                         break;
 
                     case "4":
-                        Console.WriteLine(resetValues());
+                        resetValues();
                         break;
 
                     case "5":
-
+                        clearRecipe();
                         break;
 
                     case "6":
@@ -141,23 +141,34 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         {
             Console.WriteLine();
             Console.WriteLine("---------FULL RECIPE---------");
-            Console.WriteLine("Ingredients:");
-            int count = 1;
-            foreach(IngredientsClass i in ingredientArray)
+
+            if(ingredientArray != null)
             {
-                Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
-                Console.WriteLine(i.measurementUnitMl);
-                count++;
+                Console.WriteLine("Ingredients:");
+                int count = 1;
+                foreach (IngredientsClass i in ingredientArray)
+                {
+                    Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
+                    Console.WriteLine(i.measurementUnitMl);
+                    count++;
+                }
+                Console.WriteLine();
+                Console.WriteLine("Steps:");
+                foreach (string x in stepArray)
+                {
+                    Console.WriteLine($"{count}. {x}");
+                    count++;
+                }
+                Console.WriteLine("--------------------------------");
+                Console.WriteLine();
             }
-            Console.WriteLine();
-            Console.WriteLine("Steps:");
-            foreach (string x in stepArray)
+            else
             {
-                Console.WriteLine($"{count}. {x}");
-                count++;
+                Console.WriteLine();
+                Console.WriteLine("No Recipe Found");
+                Console.WriteLine();
             }
-            Console.WriteLine("--------------------------------");
-            Console.WriteLine();
+            
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
         private void scaleRecipe()
@@ -167,52 +178,64 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
             Console.WriteLine();
             Console.WriteLine("---------SCALE RECIPE---------");
-            Console.WriteLine("1) Half");
-            Console.WriteLine("2) Double");
-            Console.WriteLine("3) Triple");
-            Console.WriteLine();
-            do
-            {
-                Console.Write("Enter choice: ");
-                choice = Console.ReadLine();
 
-                if (!validChoice(choice, 1, 3))
+            if (ingredientArray != null)
+            {
+                Console.WriteLine("1) Half");
+                Console.WriteLine("2) Double");
+                Console.WriteLine("3) Triple");
+                Console.WriteLine();
+                do
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("Please enter a number between 1 and 3.");
-                    Console.WriteLine();
-                }
-            }while(!validChoice(choice, 1, 3));
+                    Console.Write("Enter choice: ");
+                    choice = Console.ReadLine();
 
-            if(int.Parse(choice) == 1)
-            {
-                scaleFactor = 0.5;
-            }
-            else if(int.Parse(choice) == 2)
-            {
-                scaleFactor = 2;
+                    if (!validChoice(choice, 1, 3))
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Please enter a number between 1 and 3.");
+                        Console.WriteLine();
+                    }
+                } while (!validChoice(choice, 1, 3));
+
+                if (int.Parse(choice) == 1)
+                {
+                    scaleFactor = 0.5;
+                }
+                else if (int.Parse(choice) == 2)
+                {
+                    scaleFactor = 2;
+                }
+                else
+                {
+                    scaleFactor = 3;
+                }
+
+                foreach (IngredientsClass i in ingredientArray)
+                {
+                    i.scaleIngredients(i, scaleFactor);
+                }
             }
             else
             {
-                scaleFactor = 3;
-            }
-
-            foreach(IngredientsClass i in ingredientArray)
-            {
-                i.scaleIngredients(i, scaleFactor);
+                Console.WriteLine();
+                Console.WriteLine("Please create a recipe before scaling!");
+                Console.WriteLine();
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        public string resetValues()
+        private void resetValues()
         {
-            string resetValid = "Recipe quantities have been reset to original values!";
-            string resetInvalid = "No recipe found. Please create a recipe before resseting values! ";
+            Console.WriteLine();
+            Console.WriteLine("---------RESET RECIPE---------");
+            Console.WriteLine();
 
             if(ingredientArray != null)
             {
                 foreach (IngredientsClass i in ingredientArray)
                 {
                     i.ingredientQuantity = i.originalQuantity;
+                    i.measurementUnitName = i.originalunitName;
                     if (i.measurementUnitGrams == 0)
                     {
                         i.measurementUnitMl = i.originalUnitMl;
@@ -222,12 +245,27 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                         i.measurementUnitGrams = i.originalGrams;
                     }
                 }
-                return resetValid;
+                Console.WriteLine("Recipe quantities have been reset to original values!");
+                Console.WriteLine();
             }
             else
             {
-                return resetInvalid;
+                Console.WriteLine("No recipe found. Please create a recipe before resseting values!");
+                Console.WriteLine();
             }
         }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private void clearRecipe()
+        {
+            ingredientArray = null;
+            stepArray = null;
+
+            Console.WriteLine();
+            Console.WriteLine("---------CLEAR RECIPE---------");
+            Console.WriteLine();
+            Console.WriteLine("Recipe has been cleared!");
+            Console.WriteLine();
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
     }
 }
