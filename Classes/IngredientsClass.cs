@@ -11,7 +11,12 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         public string ingredientName {  get; set; }
         public double ingredientQuantity { get; set; }
         public string measurementUnitName { get; set; }
-        public double measurementUnitValue { get; set; }
+        public double measurementUnitMl { get; set; }
+        public double measurementUnitGrams { get; set; }
+        public double originalQuantity { get; set; }
+        public double originalUnitMl { get; set; }
+        public double originalGrams { get; set; }
+        public string originalunitName { get; set; }
 
         //------------------------------------------------------------------------------------------------------------------------------------------//
         public string decideUnit()
@@ -48,27 +53,27 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             {
                 case "1":
                     i.measurementUnitName = "tsp";
-                    i.measurementUnitValue = i.ingredientQuantity * 5;
+                    i.measurementUnitMl = i.ingredientQuantity * 5;
                     break;
 
                 case "2":
-                    i.measurementUnitName = "tbsp";
-                    i.measurementUnitValue = i.ingredientQuantity * 15;
+                    i.measurementUnitName = "Tbsp";
+                    i.measurementUnitMl = i.ingredientQuantity * 15;
                     break;
 
                 case "3":
                     i.measurementUnitName = "C";
-                    i.measurementUnitValue = i.ingredientQuantity * 250;
+                    i.measurementUnitMl = i.ingredientQuantity * 250;
                     break;
 
                 case "4":
                     i.measurementUnitName = "g";
-                    i.measurementUnitValue = i.ingredientQuantity * 1;
+                    i.measurementUnitGrams = i.ingredientQuantity * 1;
                     break;
 
                 case "5":
                     i.measurementUnitName = "kg";
-                    i.measurementUnitValue = i.ingredientQuantity * 1000;
+                    i.measurementUnitGrams = i.ingredientQuantity * 1000;
                     break;
             }
         }
@@ -80,5 +85,56 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             return valid && num >= 1 && num <= 5;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
+        public void scaleIngredients(IngredientsClass i, double scaling)
+        {
+            i.ingredientQuantity *= scaling;
+
+            if (i.measurementUnitGrams == 0)
+            {
+                i.measurementUnitMl *= scaling;
+
+                if(i.measurementUnitMl < 15)
+                {
+                    i.measurementUnitName = "tsp";
+                    i.ingredientQuantity /= 5;
+                }
+                else if(i.measurementUnitMl < 240)
+                {
+                    i.measurementUnitName = "Tbsp";
+                    i.ingredientQuantity = i.measurementUnitMl / 15;
+                }
+                else
+                {
+                    i.measurementUnitName = "C";
+                    i.ingredientQuantity = i.measurementUnitMl / 240;
+                }
+            }
+            else
+            {
+                i.measurementUnitGrams *= scaling;
+
+                if (i.measurementUnitGrams > 1000)
+                {
+                    i.measurementUnitName = "kg";
+                    i.ingredientQuantity /= 1000;
+                }
+            }
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        public void saveOriginal()
+        {
+            originalQuantity = ingredientQuantity;
+            originalunitName = measurementUnitName;
+            if(measurementUnitGrams == 0)
+            {
+                originalUnitMl = measurementUnitMl;
+            }
+            else
+            {
+                originalGrams = measurementUnitGrams;
+            }
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+     
     }
 }

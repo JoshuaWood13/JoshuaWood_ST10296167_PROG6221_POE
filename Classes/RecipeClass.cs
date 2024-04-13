@@ -10,6 +10,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
     {
         private string[] stepArray;
         private IngredientsClass[] ingredientArray;
+
 //------------------------------------------------------------------------------------------------------------------------------------------//
         private static string recipeMenu()
         {
@@ -28,18 +29,17 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 Console.Write("Enter choice: ");
                 choice = Console.ReadLine();
 
-                if (!validChoice(choice))
+                if (!validChoice(choice,1 ,6 ))
                 {
                     Console.WriteLine();
                     Console.WriteLine("Please enter a number between 1 and 6.");
                     Console.WriteLine();
                 }
-            } while (!validChoice(choice));
+            } while (!validChoice(choice,1 ,6 ));
 
             return choice;
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        
         public void buildRecipe()
         {
             while (true)
@@ -56,11 +56,11 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                         break;
 
                     case "3":
-
+                        scaleRecipe();
                         break;
 
                     case "4":
-
+                        Console.WriteLine(resetValues());
                         break;
 
                     case "5":
@@ -74,12 +74,11 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-
-        private static bool validChoice(string choice)
+        private static bool validChoice(string choice, int min, int max)
         {
             int num;
             bool valid = int.TryParse(choice, out num);
-            return valid && num >= 1 && num <= 6;
+            return valid && num >= min && num <= max;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
         private static int validNum(string input)
@@ -93,7 +92,6 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             return result;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
-
         private void inputRecipeDetails()
         {
             int ingredientNum;
@@ -119,6 +117,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 Console.WriteLine();
                 unitDecision = ingredientArray[i].decideUnit();
                 ingredientArray[i].assignUnit(ingredientArray[i],unitDecision);
+                ingredientArray[i].saveOriginal();
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------");
                 count++;
@@ -146,7 +145,8 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             int count = 1;
             foreach(IngredientsClass i in ingredientArray)
             {
-                Console.WriteLine($"{count}. {i.measurementUnitValue} {i.measurementUnitName}(s) of {i.ingredientName}");
+                Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
+                Console.WriteLine(i.measurementUnitMl);
                 count++;
             }
             Console.WriteLine();
@@ -158,6 +158,76 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
             Console.WriteLine("--------------------------------");
             Console.WriteLine();
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private void scaleRecipe()
+        {
+            string choice;
+            double scaleFactor;
+
+            Console.WriteLine();
+            Console.WriteLine("---------SCALE RECIPE---------");
+            Console.WriteLine("1) Half");
+            Console.WriteLine("2) Double");
+            Console.WriteLine("3) Triple");
+            Console.WriteLine();
+            do
+            {
+                Console.Write("Enter choice: ");
+                choice = Console.ReadLine();
+
+                if (!validChoice(choice, 1, 3))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Please enter a number between 1 and 3.");
+                    Console.WriteLine();
+                }
+            }while(!validChoice(choice, 1, 3));
+
+            if(int.Parse(choice) == 1)
+            {
+                scaleFactor = 0.5;
+            }
+            else if(int.Parse(choice) == 2)
+            {
+                scaleFactor = 2;
+            }
+            else
+            {
+                scaleFactor = 3;
+            }
+
+            foreach(IngredientsClass i in ingredientArray)
+            {
+                i.scaleIngredients(i, scaleFactor);
+            }
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        public string resetValues()
+        {
+            string resetValid = "Recipe quantities have been reset to original values!";
+            string resetInvalid = "No recipe found. Please create a recipe before resseting values! ";
+
+            if(ingredientArray != null)
+            {
+                foreach (IngredientsClass i in ingredientArray)
+                {
+                    i.ingredientQuantity = i.originalQuantity;
+                    if (i.measurementUnitGrams == 0)
+                    {
+                        i.measurementUnitMl = i.originalUnitMl;
+                    }
+                    else
+                    {
+                        i.measurementUnitGrams = i.originalGrams;
+                    }
+                }
+                return resetValid;
+            }
+            else
+            {
+                return resetInvalid;
+            }
         }
     }
 }
