@@ -68,7 +68,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
                 case "4":
                     i.measurementUnitName = "g";
-                    i.measurementUnitGrams = i.ingredientQuantity * 1;
+                    i.measurementUnitGrams = i.ingredientQuantity;
                     break;
 
                 case "5":

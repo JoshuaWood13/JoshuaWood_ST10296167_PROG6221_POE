@@ -92,6 +92,17 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             return result;
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
+        private static double validQuantity(string input)
+        {
+            double result;
+            while (!double.TryParse(input, out result))
+            {
+                Console.Write("Please enter a valid number: ");
+                input = Console.ReadLine();
+            }
+            return result;
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
         private void inputRecipeDetails()
         {
             int ingredientNum;
@@ -113,7 +124,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 Console.Write($"Enter ingredient {count} name: ");
                 ingredientArray[i].ingredientName = Console.ReadLine();
                 Console.Write($"Enter ingredient {count} quantity: ");
-                ingredientArray[i].ingredientQuantity = validNum(Console.ReadLine());
+                ingredientArray[i].ingredientQuantity = validQuantity(Console.ReadLine());
                 Console.WriteLine();
                 unitDecision = ingredientArray[i].decideUnit();
                 ingredientArray[i].assignUnit(ingredientArray[i],unitDecision);
