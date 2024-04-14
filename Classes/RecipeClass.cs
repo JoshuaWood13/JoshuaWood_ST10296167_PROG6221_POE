@@ -160,7 +160,6 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 foreach (IngredientsClass i in ingredientArray)
                 {
                     Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
-                    Console.WriteLine(i.measurementUnitMl);
                     count++;
                 }
                 Console.WriteLine();
@@ -268,14 +267,55 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 //------------------------------------------------------------------------------------------------------------------------------------------//
         private void clearRecipe()
         {
-            ingredientArray = null;
-            stepArray = null;
-
             Console.WriteLine();
             Console.WriteLine("---------CLEAR RECIPE---------");
             Console.WriteLine();
-            Console.WriteLine("Recipe has been cleared!");
-            Console.WriteLine();
+            if (confrimPrompt())
+            {
+                ingredientArray = null;
+                stepArray = null;
+                Console.WriteLine();
+                Console.WriteLine("Recipe has been cleared!");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Recipe will not be cleared!");
+                Console.WriteLine();
+            }
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private static Boolean confrimPrompt()
+        {
+            string input;
+            Boolean decision = false;
+            Boolean y = false;
+            while(y == false)
+            {
+                Console.Write("Are you sure you would like to clear recipe? (Y/N): ");
+                input = Console.ReadLine();
+
+                if (input.Equals("y", StringComparison.OrdinalIgnoreCase))
+                {
+                    y = true;
+                    decision = true;
+                    return decision;
+                }
+                else if (input.Equals("n", StringComparison.OrdinalIgnoreCase))
+                {
+                    y = true;
+                    decision= false;
+                    return decision;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Please enter Y or N!");
+                    Console.WriteLine();
+                }
+            }
+            return decision;
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
     }
