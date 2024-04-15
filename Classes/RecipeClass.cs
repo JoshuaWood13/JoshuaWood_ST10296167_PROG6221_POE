@@ -16,7 +16,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         {
             string choice;
 
-            Console.WriteLine("====== RECIPE GENERATOR MENU ======\n");
+            borderColour("====== RECIPE GENERATOR MENU ======\n", ConsoleColor.Blue);
             Console.WriteLine("1) Enter recipe details");
             Console.WriteLine("2) Display recipe");
             Console.WriteLine("3) Scale recipe");
@@ -110,51 +110,63 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             int count = 1;
 
             Console.WriteLine();
-            Console.WriteLine("---------RECIPE DETAILS---------");
+            borderColour("---------RECIPE DETAILS---------", ConsoleColor.Green);
             Console.WriteLine();
-            Console.Write("Enter number of ingredients in recipe: ");
-            ingredientNum = validNum(Console.ReadLine());
-            Console.WriteLine();
-            Console.WriteLine("--------------------------------");
-            ingredientArray = new IngredientsClass[ingredientNum];
-            for(int i = 0; i < ingredientNum; i++)
+
+            if(ingredientArray != null)
             {
-                string unitDecision;
-                ingredientArray[i] = new IngredientsClass();
-                Console.Write($"Enter ingredient {count} name: ");
-                ingredientArray[i].ingredientName = Console.ReadLine();
-                Console.Write($"Enter ingredient {count} quantity: ");
-                ingredientArray[i].ingredientQuantity = validQuantity(Console.ReadLine());
+                Console.WriteLine("Please clear the current recipe before creating a new one!");
                 Console.WriteLine();
-                unitDecision = ingredientArray[i].decideUnit();
-                ingredientArray[i].assignUnit(ingredientArray[i],unitDecision);
-                ingredientArray[i].saveOriginal();
+                borderColour("--------------------------------", ConsoleColor.Green);
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.Write("Enter number of ingredients in recipe: ");
+                ingredientNum = validNum(Console.ReadLine());
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------");
-                count++;
-            }
-            Console.WriteLine();
-            Console.Write("Enter number of recipe steps: ");
-            steps = validNum(Console.ReadLine());
-            Console.WriteLine();
-            stepArray = new string[steps];
-            count = 1;
-            for (int j = 0; j < steps; j++)
-            {
-                Console.WriteLine($"Please type step {count} below:");
-                stepArray[j] = Console.ReadLine();
+                ingredientArray = new IngredientsClass[ingredientNum];
+                for (int i = 0; i < ingredientNum; i++)
+                {
+                    string unitDecision;
+                    ingredientArray[i] = new IngredientsClass();
+                    Console.Write($"Enter ingredient {count} name: ");
+                    ingredientArray[i].ingredientName = Console.ReadLine();
+                    Console.Write($"Enter ingredient {count} quantity: ");
+                    ingredientArray[i].ingredientQuantity = validQuantity(Console.ReadLine());
+                    Console.WriteLine();
+                    unitDecision = ingredientArray[i].decideUnit();
+                    ingredientArray[i].assignUnit(ingredientArray[i], unitDecision);
+                    ingredientArray[i].saveOriginal();
+                    Console.WriteLine();
+                    Console.WriteLine("--------------------------------");
+                    count++;
+                }
                 Console.WriteLine();
-                count++;
+                Console.Write("Enter number of recipe steps: ");
+                steps = validNum(Console.ReadLine());
+                Console.WriteLine();
+                stepArray = new string[steps];
+                count = 1;
+                for (int j = 0; j < steps; j++)
+                {
+                    Console.WriteLine($"Please type step {count} below:");
+                    stepArray[j] = Console.ReadLine();
+                    Console.WriteLine();
+                    count++;
+                }
             }
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
         private void displayRecipe()
         {
             Console.WriteLine();
-            Console.WriteLine("---------FULL RECIPE---------");
+            borderColour("---------FULL RECIPE---------", ConsoleColor.Magenta);
 
             if(ingredientArray != null)
             {
+                Console.ForegroundColor= ConsoleColor.Green;
                 Console.WriteLine("Ingredients:");
                 int count = 1;
                 foreach (IngredientsClass i in ingredientArray)
@@ -162,14 +174,18 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                     Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
                     count++;
                 }
+                Console.ResetColor();
                 Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Steps:");
+                count = 1;
                 foreach (string x in stepArray)
                 {
                     Console.WriteLine($"{count}. {x}");
                     count++;
                 }
-                Console.WriteLine("--------------------------------");
+                Console.ResetColor();
+                borderColour("--------------------------------", ConsoleColor.Magenta);
                 Console.WriteLine();
             }
             else
@@ -187,7 +203,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             double scaleFactor;
 
             Console.WriteLine();
-            Console.WriteLine("---------SCALE RECIPE---------");
+            borderColour("---------SCALE RECIPE---------", ConsoleColor.Cyan);
 
             if (ingredientArray != null)
             {
@@ -199,10 +215,11 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 {
                     Console.Write("Enter choice: ");
                     choice = Console.ReadLine();
+                    Console.WriteLine();
 
                     if (!validChoice(choice, 1, 3))
                     {
-                        Console.WriteLine();
+                        //Console.WriteLine();
                         Console.WriteLine("Please enter a number between 1 and 3.");
                         Console.WriteLine();
                     }
@@ -237,7 +254,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         private void resetValues()
         {
             Console.WriteLine();
-            Console.WriteLine("---------RESET RECIPE---------");
+            borderColour("---------RESET RECIPE---------", ConsoleColor.DarkYellow);
             Console.WriteLine();
 
             if(ingredientArray != null)
@@ -268,7 +285,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         private void clearRecipe()
         {
             Console.WriteLine();
-            Console.WriteLine("---------CLEAR RECIPE---------");
+            borderColour("---------CLEAR RECIPE---------", ConsoleColor.Red);
             Console.WriteLine();
             if (confrimPrompt())
             {
@@ -316,6 +333,13 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 }
             }
             return decision;
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private static void borderColour(string border, ConsoleColor c)
+        {
+            Console.ForegroundColor = c;
+            Console.WriteLine(border);
+            Console.ResetColor();
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
     }
