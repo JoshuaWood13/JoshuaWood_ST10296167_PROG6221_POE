@@ -157,7 +157,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                     //Assigns the kg measurement unit name for current scaled value
                     i.measurementUnitName = "kg";
                     //Calculates the scaled kg quantity by dividing the scaled g value by the g value of a kg (1000)
-                    i.ingredientQuantity /= 1000;  
+                    i.ingredientQuantity = i.measurementUnitGrams / 1000;  
                 }
             }
         }
