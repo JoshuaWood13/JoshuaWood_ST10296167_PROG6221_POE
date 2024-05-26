@@ -18,10 +18,13 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         //Declaring the variables that will be used to get and set all ingredient details
         public string ingredientName {  get; set; } //Stores ingredient name
         public double ingredientQuantity { get; set; } //Stores ingredient quantity
+        public double ingredientCalories { get; set; }
+        public string ingredientFoodGroup { get; set; }
         public string measurementUnitName { get; set; } //Stores measurement unit name assigned to ingredient
         public double measurementUnitMl { get; set; } //Stores the quantity of ingredient in millilitres 
         public double measurementUnitGrams { get; set; } //Stores the quantity of ingredient in grams
         public double originalQuantity { get; set; } //Stores the original quantity assigned to ingredient
+        public double originalCalories { get; set; }
         public double originalUnitMl { get; set; } //Stores the original millilitre amount of ingredient
         public double originalGrams { get; set; } //Stores the original gram amount of ingredient
         public string originalunitName { get; set; } //Stores the original measurement unit assigned to ingredient
@@ -52,14 +55,49 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 choice = Console.ReadLine();  
 
                 //If a valid number is not entered the user will be prompted again
-                if (!validChoice(choice))  
+                if (!validChoice(choice,1,5))  
                 {
                     Console.WriteLine();
                     Console.WriteLine("Please enter a number between 1 and 5!");
                     Console.WriteLine();
                 }
             //User will keep being prompted until they make a valid choice
-            }while(!validChoice(choice));  
+            }while(!validChoice(choice,1,5));  
+
+            return choice;
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+
+        public string decideFoodGroup()
+        {
+            string choice;
+
+            //Displaying the food group menu
+            Console.WriteLine("Please select the Food Group:");
+            Console.WriteLine("1) Starchy foods");
+            Console.WriteLine("2) Vegetables and fruits");
+            Console.WriteLine("3) Dry beans, peas, lentils and soya");
+            Console.WriteLine("4) Chicken, fish, meat and eggs");
+            Console.WriteLine("5) Milk and dairy");
+            Console.WriteLine("6) Fats and oil");
+            Console.WriteLine("7) Water");
+            Console.WriteLine();
+
+            do
+            {
+                Console.Write("Enter choice: ");
+                //Assigns user input to choice variable
+                choice = Console.ReadLine();
+
+                //If a valid number is not entered the user will be prompted again
+                if (!validChoice(choice,1,7))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Please enter a number between 1 and 7!");
+                    Console.WriteLine();
+                }
+                //User will keep being prompted until they make a valid choice
+            } while (!validChoice(choice,1,7));
 
             return choice;
         }
@@ -97,15 +135,51 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method takes a user's valid choice as the input parameter, to assign the correct measurement unit name and value to the ingredientClass object i parameter
+        public void assignFoodGroup(IngredientsClass i, string input)
+        {
+            switch (input)
+            {
+                //Assigns a ml or gram equivalent amount for ingredient quantity that will be used to accurately scale values later
+                case "1":
+                    i.ingredientFoodGroup = "Starchy foods";
+                    break;
+
+                case "2":
+                    i.ingredientFoodGroup = "Vegetables and fruits";
+                    break;
+
+                case "3":
+                    i.ingredientFoodGroup = "Dry beans, peas, lentils and soya";
+                    break;
+
+                case "4":
+                    i.ingredientFoodGroup = "Chicken, fish, meat and eggs";
+                    break;
+
+                case "5":
+                    i.ingredientFoodGroup = "Milk and dairy";
+                    break;
+
+                case "6":
+                    i.ingredientFoodGroup = "Fats and oil";
+                    break;
+
+                case "7":
+                    i.ingredientFoodGroup = "Water";
+                    break;
+            }
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
         //This method takes a user's choice as a string parameter and attempts to convert it into an integer.
         //If that succeeds and the int falls in the specified number range (1-5) the method returns true else it retuns false
-        private static bool validChoice(string choice)
+        private static bool validChoice(string choice, int min, int max)
         {
             //Stores converted integer from user's choice
             int num;   
             bool valid = int.TryParse(choice, out num);
             //Only retuns true if conversion from string is succesfull and num is between 1 and 5
-            return valid && num >= 1 && num <= 5;  
+            return valid && num >= min && num <= max;  
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method scales the ingredient i based off the scaling factor from the scaling parameter decided by user. The ml and gram values
@@ -114,6 +188,8 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         {
             //Scales ingredient quantity by the scale factor (used for gram values)
             i.ingredientQuantity *= scaling;  
+
+            i.ingredientCalories *= scaling;
 
             //This if statement checks if there is no ingredient value for grams which would mean the current ingredient value is in ml
             if (i.measurementUnitGrams == 0)
@@ -167,6 +243,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         {
             originalQuantity = ingredientQuantity;
             originalunitName = measurementUnitName;
+            originalCalories = ingredientCalories;
 
             //This if else statement determines if the ingredient value is in ml or g and then stores the correct ml/g value in a seperate variable
             if(measurementUnitGrams == 0)

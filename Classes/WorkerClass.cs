@@ -15,13 +15,14 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 {
     public class WorkerClass
     {
-        private RecipeClass recipe = new RecipeClass();
+        private RecipeClass recipee = new RecipeClass();
+        private RecipeManagerClass recipeManager = new RecipeManagerClass();
 
 //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method calls and runs the buildRecipe method that allows for a user to create and make to changes to a recipe
         public void run()
         {
-            recipe.buildRecipe();
+            recipee.buildRecipe(recipeManager);
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
     }
