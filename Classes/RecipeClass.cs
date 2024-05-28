@@ -4,6 +4,9 @@
 
 // References: 
 // tutorialspoint. 2024. How to change the Foreground Color of Text in C# Console?. Available at: https://www.tutorialspoint.com/how-to-change-the-foreground-color-of-text-in-chash-console
+// MedicalNewsToday. 2017. Calories: Requirements, health needs, and function. Available at: https://www.medicalnewstoday.com/articles/263028
+// Twinkl. 2024. What are the Food Groups?. Avaialble at: https://www.twinkl.co.za/teaching-wiki/food-groups#:~:text=Well%2C%20each%20of%20the%205,a%20healthy%20and%20balanced%20diet.
+// StackOverflow. 2019. Checking whether string is empty, contains int or is an integer. Available at: https://stackoverflow.com/questions/59438107/checking-whether-string-is-empty-contains-int-or-is-an-integer
 
 using System;
 using System.CodeDom;
@@ -21,11 +24,11 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         private IngredientsClass[] ingredientArray;
 
         private List<string> stepList { get; set; }
-        private List<IngredientsClass> ingredientList { get; set; }
+        public List<IngredientsClass> ingredientList { get; set; }
         public string recipeName { get; set; }
         public double recipeCalorieTotal { get; set; }
 
-        public delegate void calorieAlert(double sum);
+        public delegate void calorieAlert(double num);
         
         public RecipeClass()
         {
@@ -43,7 +46,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
             //Displays recipe generator menu
             borderColour("====== RECIPE GENERATOR MENU ======\n", ConsoleColor.Blue);
-            Console.WriteLine("1) Enter recipe details");
+            Console.WriteLine("1) Create a recipe");
             Console.WriteLine("2) Display recipe");
             Console.WriteLine("3) Scale recipe");
             Console.WriteLine("4) Reset recipe");
@@ -129,9 +132,10 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             int result;  
 
             //This while loop keeps executing until the user's input is a valid integer
-            while(!int.TryParse(input, out result))
+            while(!int.TryParse(input, out result) || result <= 0)
             {
-                Console.Write("Please enter a valid number: ");
+                Console.WriteLine();
+                Console.Write("Please enter a valid non-negative number above zero: ");
                 input = Console.ReadLine();
             }
             return result;
@@ -139,18 +143,46 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method accepts a user's input as a parameter and determines if the input is a double. If not the user is prompted to enter a double
         //A valid double is then returned
-        private static double validDouble(string input)
+        private static double validDouble(string input, int condition)
         {
             //Stores converted double
             double result;  
 
             //This while loop keeps executing until the user's input is a valid double
-            while (!double.TryParse(input, out result))
+            while (!double.TryParse(input, out result) || result < condition)
             {
-                Console.Write("Please enter a valid number: ");
-                input = Console.ReadLine();
+                if(condition == 1)
+                {
+                    Console.WriteLine();
+                    Console.Write("Please enter a valid non-negative number above zero: ");
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.Write("Please enter a valid non-negative number: ");
+                    input = Console.ReadLine();
+                }
             }
             return result;
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private static string validString()
+        {
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (!string.IsNullOrWhiteSpace(input) & !input.Any(char.IsDigit))  // (StackOverflow,2019)
+                {
+                    return input;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.Write("Invalid input. Please enter a non-empty string without numbers: ");
+                }
+            }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method prompts the user for all recipe ingredient details and all recipe steps and saves these details in arrays
@@ -170,101 +202,121 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.WriteLine();
             
             Console.Write("Enter recipe name: ");
-                recipe.recipeName = Console.ReadLine();    //add error handling
+            recipe.recipeName = validString();
+            Console.WriteLine();
+
+            //Prompts user for number of ingredients
+            Console.Write("Enter number of ingredients in recipe: ");
+            //Assigns a valid number entered by user
+            ingredientNum = validNum(Console.ReadLine());
+            Console.WriteLine();
+            Console.WriteLine("--------------------------------");
+
+            //Initializing an ingredient array and setting its size to the user's input
+            //ingredientArray = new IngredientsClass[ingredientNum];
+            //This for loop iterates over each element of the ingredient array
+            double calorieCount = 0;
+            for (int i = 0; i < ingredientNum; i++)
+            {
+                string decision;
+                //Create a new IngredientsClass object
+                //ingredientArray[i] = new IngredientsClass();
+
+                IngredientsClass ingredient = new IngredientsClass();
+
+                //Prompts user to enter ingredient name
+                Console.Write($"Enter ingredient {count} name: ");
+                //Assings ingredient name to user input
+                //ingredientArray[i].ingredientName = Console.ReadLine();
+
+                ingredient.ingredientName = validString();
+                Console.WriteLine();
+                //Prompts the user to enter ingredient quantity
+                Console.Write($"Enter ingredient {count} quantity: ");
+                //Assigns ingredient quantity to a valid quantity input by the user
+                //ingredientArray[i].ingredientQuantity = validQuantity(Console.ReadLine());
+
+                ingredient.ingredientQuantity = validDouble(Console.ReadLine(),1);
+
+                //ingredient.ingredientCalories = validDouble(Console.ReadLine());
+                //recipe.recipeCalorieTotal += ingredient.ingredientCalories;   //calc problem
                 Console.WriteLine();
 
-                //Prompts user for number of ingredients
-                Console.Write("Enter number of ingredients in recipe: ");
-                //Assigns a valid number entered by user
-                ingredientNum = validNum(Console.ReadLine());
+                //Stores the choice for measurement unit in variable
+                //unitDecision = ingredientArray[i].decideUnit();
+
+                decision = ingredient.decideUnit();
+
+                //Uses unitDecision to assign the correct measurement unit to the ingredient
+                //ingredientArray[i].assignUnit(ingredientArray[i], unitDecision);
+
+                ingredient.assignUnit(ingredient, decision);
+                Console.WriteLine();
+
+                Console.WriteLine("***************************************************************************************************");
+                Console.WriteLine("A food group is a collection of foods that share similar nutrional properties.");
+                Console.WriteLine("Each of the 7 food groups are essential in ensuring we have a healthy and balanced diet!");    // (Twinkl,2024)
+                Console.WriteLine("***************************************************************************************************");
+                Console.WriteLine();
+
+                decision = ingredient.decideFoodGroup();
+                ingredient.assignFoodGroup(ingredient, decision);
+
+
+                Console.WriteLine();
+                Console.WriteLine("***************************************************************************************************");
+                Console.WriteLine("A calorie is a unit of energy that refer to the energy people get from food and drink they consume.");
+                Console.WriteLine("Calories are essential for human health. The key is consuming the right amount!");  //(MedicalNewsToday,2017)
+                Console.WriteLine("***************************************************************************************************");
+                Console.WriteLine();
+
+                Console.Write($"Enter ingredient {count} calorie count: ");
+                ingredient.ingredientCalories = validDouble(Console.ReadLine(),0);
+
+                calorieCount += ingredient.ingredientCalories;
+                calorieCheck(calorieCount, caloriesExceeded);
+                //Saves all the ingredient information 
+                //ingredientArray[i].saveOriginal();
+
+                ingredient.saveOriginal();
+                recipe.ingredientList.Add(ingredient);
+
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------");
+                count++;
+            }
+            recipe.recipeCalorieTotal = calculateCalorieTotal(recipe.ingredientList);
+            displayCalorieTotal(recipe.recipeCalorieTotal);
+            Console.WriteLine();
+            //Prompts the user to enter the required number of steps
+            Console.Write("Enter number of recipe steps: ");
+            //Assigns step number to a valid number entered by user
+            steps = validNum(Console.ReadLine());
+            Console.WriteLine();
+            //Initializing step array and setting its size to the number chosen by user
+            //stepArray = new string[steps];
+            //Resetting count so that steps can be properly numbered
+            count = 1;
+            //This for loop iterates over every element of the step array
+            for (int j = 0; j < steps; j++)
+            {
+                string step;
+                //Prompts the user to enter a step
+                Console.WriteLine($"Please type step {count} below:");
+                //Assings array element to the user's input
+                //stepArray[j] = Console.ReadLine();
 
-                //Initializing an ingredient array and setting its size to the user's input
-                //ingredientArray = new IngredientsClass[ingredientNum];
-                //This for loop iterates over each element of the ingredient array
-                for (int i = 0; i < ingredientNum; i++)
-                {
-                    string decision;
-                    //Create a new IngredientsClass object
-                    //ingredientArray[i] = new IngredientsClass();
+                step = Console.ReadLine();
+                recipe.stepList.Add(step);
 
-                    IngredientsClass ingredient = new IngredientsClass();
-
-                    //Prompts user to enter ingredient name
-                    Console.Write($"Enter ingredient {count} name: ");
-                    //Assings ingredient name to user input
-                    //ingredientArray[i].ingredientName = Console.ReadLine();
-
-                    ingredient.ingredientName = Console.ReadLine();
-
-                    //Prompts the user to enter ingredient quantity
-                    Console.Write($"Enter ingredient {count} quantity: ");
-                    //Assigns ingredient quantity to a valid quantity input by the user
-                    //ingredientArray[i].ingredientQuantity = validQuantity(Console.ReadLine());
-
-                    ingredient.ingredientQuantity = validDouble(Console.ReadLine());
-
-                    //Console.WriteLine();
-
-                    Console.Write($"Enter ingredient {count} calorie count: ");
-                    ingredient.ingredientCalories = validDouble(Console.ReadLine());
-                    recipe.recipeCalorieTotal += ingredient.ingredientCalories;
-                    Console.WriteLine();
-
-                    //Stores the choice for measurement unit in variable
-                    //unitDecision = ingredientArray[i].decideUnit();
-
-                    decision = ingredient.decideUnit();
-
-                    //Uses unitDecision to assign the correct measurement unit to the ingredient
-                    //ingredientArray[i].assignUnit(ingredientArray[i], unitDecision);
-
-                    ingredient.assignUnit(ingredient, decision);
-                    Console.WriteLine();
-
-                    decision = ingredient.decideFoodGroup();
-                    ingredient.assignFoodGroup(ingredient, decision);
-
-                    //Saves all the ingredient information 
-                    //ingredientArray[i].saveOriginal();
-
-                    ingredient.saveOriginal();
-                    recipe.ingredientList.Add(ingredient);
-
-                    Console.WriteLine();
-                    Console.WriteLine("--------------------------------");
-                    count++;
-                }
-                displayCalorieTotal(recipe.ingredientList,recipe,caloriesExceeded);
                 Console.WriteLine();
-                //Prompts the user to enter the required number of steps
-                Console.Write("Enter number of recipe steps: ");
-                //Assigns step number to a valid number entered by user
-                steps = validNum(Console.ReadLine());
-                Console.WriteLine();
-                //Initializing step array and setting its size to the number chosen by user
-                //stepArray = new string[steps];
-                //Resetting count so that steps can be properly numbered
-                count = 1;
-                //This for loop iterates over every element of the step array
-                for (int j = 0; j < steps; j++)
-                {
-                    string step;
-                    //Prompts the user to enter a step
-                    Console.WriteLine($"Please type step {count} below:");
-                    //Assings array element to the user's input
-                    //stepArray[j] = Console.ReadLine();
+                count++;
+            }
 
-                    step = Console.ReadLine();
-                    recipe.stepList.Add(step);
-
-                    Console.WriteLine();
-                    count++;
-                }
-
-                r.addRecipe(recipe);
-                r.sortAlphabeticalOrder();
+            r.addRecipe(recipe);
+            r.sortAlphabeticalOrder();
+            Console.WriteLine("Recipe Created!");
+            Console.WriteLine();
         }
 //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method displays all stored ingredient and step information for recipe
@@ -284,6 +336,10 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 borderColour("---------FULL RECIPE---------", ConsoleColor.Magenta);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Recipe name: {selected.recipeName}");
+                Console.ResetColor();
+                Console.WriteLine();
+                Console.ForegroundColor= ConsoleColor.Cyan;
+                Console.WriteLine($"Total calories: {selected.recipeCalorieTotal}");
                 Console.ResetColor();
                 Console.WriteLine();
                 Console.ForegroundColor= ConsoleColor.Green;
@@ -508,30 +564,72 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.ResetColor();
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        private static void displayCalorieTotal(List<IngredientsClass> ingredients, RecipeClass recipe, calorieAlert action)
+        private static void displayCalorieTotal(double total)
         {
-            double total = 0;
-
-            foreach(IngredientsClass ingredient in ingredients)
-            {
-                total += ingredient.ingredientCalories;
-            }
-            recipe.recipeCalorieTotal = total;
             Console.WriteLine();
             Console.WriteLine($"Total calories in recipe: {total}");
-
-            if(total > 300)
+            Console.WriteLine();
+            Console.WriteLine("Explanation:");
+            if (total <= 100)
             {
-                action.Invoke(total);
+                Console.WriteLine("This recipe is very low in calories, making it a great option for a light snack or a side dish.");
+                Console.WriteLine("It's ideal for those looking to reduce their caloric intake while still enjoying a flavourful meal.");
+            }
+            else if(total <= 300)
+            {
+                Console.WriteLine("This recipe falls into the low-calorie range, perfect for a light meal or a more substantial snack.");
+                Console.WriteLine("It can be part of a balanced diet and is suitable for those managing their weight.");
+            }
+            else if(total <= 500)
+            {
+                Console.WriteLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized.");
+                Console.WriteLine("It’s ideal for individuals who need a bit more energy, such as after physical activity.");
+            }
+            else if( total <= 700)
+            {
+                Console.WriteLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized.");
+                Console.WriteLine("It’s ideal for individuals who need a bit more energy, such as after physical activity.");
+            }
+            else if(total <= 1000)
+            {
+                Console.WriteLine("This recipe is relatively high in calories and works well as a hearty main dish.");
+                Console.WriteLine("It’s suitable for those with higher energy needs, such as active individuals or those looking to gain weight in a healthy manner.");
+            }
+            else
+            {
+                Console.WriteLine("This recipe is very high in calories, making it a substantial meal that is best suited for special occasions.");
+                Console.WriteLine("Be mindful of portion sizes if you’re watching your calorie intake.");
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        private static void caloriesExceeded(double sum)
+        public double calculateCalorieTotal(List<IngredientsClass> ingredients)
         {
-            Console.WriteLine();
-            borderColour("************************************", ConsoleColor.Red);
-            borderColour("Total calories of recipe exceed 300!", ConsoleColor.Red);
-            borderColour("************************************", ConsoleColor.Red);
+            double total = 0;
+
+            foreach (IngredientsClass ingredient in ingredients)
+            {
+                total += ingredient.ingredientCalories;
+            }
+
+            return total;
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private static void calorieCheck(double num, calorieAlert alert)
+        {
+            alert(num);
+        }
+//------------------------------------------------------------------------------------------------------------------------------------------//
+        private static void caloriesExceeded(double num)
+        {
+            if(num > 300)
+            {
+                Console.WriteLine();
+                borderColour("******************************************************", ConsoleColor.Red);
+                borderColour("Total calories of recipe exceed 300!", ConsoleColor.Red);
+                borderColour("This recipe no longer falls into the low-calorie range", ConsoleColor.Red);
+                borderColour("It is therefore more suitable for a main meal ",ConsoleColor.Red);
+                borderColour("******************************************************", ConsoleColor.Red);
+            }
         }
     }
 }

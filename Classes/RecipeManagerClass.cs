@@ -10,7 +10,6 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
     {
         private List<RecipeClass> recipeList {  get; set; }
 
-//------------------------------------------------------------------------------------------------------------------------------------------//
         public RecipeManagerClass()
         {
             recipeList = new List<RecipeClass>();

@@ -4,6 +4,7 @@
 
 // References: 
 // Exploratorium. 2024. Measurement Equivalents. Available at: https://www.exploratorium.edu/food/measurements
+// SweetLife. 2022. What are the different food groups? A simple explanation. Available at: https://sweetlife.org.za/what-are-the-different-food-groups-a-simple-explanation/
 
 using System;
 using System.Collections.Generic;
@@ -136,7 +137,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method takes a user's valid choice as the input parameter, to assign the correct measurement unit name and value to the ingredientClass object i parameter
-        public void assignFoodGroup(IngredientsClass i, string input)
+        public void assignFoodGroup(IngredientsClass i, string input)  // (SweetLife,2022)
         {
             switch (input)
             {
