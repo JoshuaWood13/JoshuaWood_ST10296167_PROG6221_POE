@@ -7,9 +7,9 @@ PROG POE PART 2
 GitHub repository link: 
 https://github.com/JoshuaWood13/JoshuaWood_ST10296167_PROG6221_POE.git
 
-How to compile and run the software:
+# How to compile and run the software:
 
-# Make sure you have the Microsoft Visual Studio IDE installed! #
+*Make sure you have the Microsoft Visual Studio IDE installed!* 
 
 1. Right click on the project zip file and select extract all and then choose a location to extract to.
 
@@ -24,7 +24,7 @@ How to compile and run the software:
 6. The application can be exited by user input, but in case of an error, it can also be exited by closing the window or pressing the red "Stop debugging" icon in the IDE navigation bar.
 
 
-How to use the application:
+# How to use the application:
 
 1) Create a recipe
 2) Display recipe
