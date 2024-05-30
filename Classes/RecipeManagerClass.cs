@@ -1,4 +1,11 @@
-﻿using System;
+﻿// Name: Joshua Wood
+// Student number: ST10296167
+// Group: 2
+
+// References:
+// IronPdf. 2024. C# Orderby (How It Works For Developers). Available at: https://ironpdf.com/blog/net-help/csharp-orderby-guide/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +17,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
     {
         private List<RecipeClass> recipeList {  get; set; }
 
+        //Constructor
         public RecipeManagerClass()
         {
             recipeList = new List<RecipeClass>();
@@ -25,11 +33,8 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             recipeList.Remove(recipe);
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        public void sortAlphabeticalOrder()
-        {
-            recipeList.OrderBy(r => r.recipeName).ToList();
-        }
-//------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method sorts the recipe List alphabetically by recipe name and then displays the list of recipes and gets user input to select
+        //a recipe from the list. This recipe is then returned
         public RecipeClass displayOrderedRecipes(string prompt)
         {
             if (recipeList == null || recipeList.Count == 0)
@@ -37,7 +42,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 return null;
             }
 
-            recipeList = recipeList.OrderBy(r => r.recipeName).ToList();
+            recipeList = recipeList.OrderBy(r => r.recipeName).ToList(); // (IronPdf,2024).
             int count = 1;
             foreach (RecipeClass recipe in recipeList)
             {

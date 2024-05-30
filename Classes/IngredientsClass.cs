@@ -19,19 +19,19 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         //Declaring the variables that will be used to get and set all ingredient details
         public string ingredientName {  get; set; } //Stores ingredient name
         public double ingredientQuantity { get; set; } //Stores ingredient quantity
-        public double ingredientCalories { get; set; }
-        public string ingredientFoodGroup { get; set; }
+        public double ingredientCalories { get; set; } //Stores ingredient calories
+        public string ingredientFoodGroup { get; set; } //Stores ingredient food group
         public string measurementUnitName { get; set; } //Stores measurement unit name assigned to ingredient
         public double measurementUnitMl { get; set; } //Stores the quantity of ingredient in millilitres 
         public double measurementUnitGrams { get; set; } //Stores the quantity of ingredient in grams
         public double originalQuantity { get; set; } //Stores the original quantity assigned to ingredient
-        public double originalCalories { get; set; }
+        public double originalCalories { get; set; } //Stores the original calorie count assigned to ingredient
         public double originalUnitMl { get; set; } //Stores the original millilitre amount of ingredient
         public double originalGrams { get; set; } //Stores the original gram amount of ingredient
         public string originalunitName { get; set; } //Stores the original measurement unit assigned to ingredient
 
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method prompts the user to choose a measurment unit to assing to an ingredient. They are provided with a menu of choices and are
+        //This method prompts the user to choose a measurment unit to assign to an ingredient. They are provided with a menu of choices and are
         //continously prompted until they choose a valid unit
         public string decideUnit()
         {
@@ -67,8 +67,9 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
             return choice;
         }
-//------------------------------------------------------------------------------------------------------------------------------------------//
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method prompts the user to choose a food group to assign to an ingredient. They are provided with a menu of choices and are
+        //continously prompted until they choose a valid unit
         public string decideFoodGroup()
         {
             string choice;

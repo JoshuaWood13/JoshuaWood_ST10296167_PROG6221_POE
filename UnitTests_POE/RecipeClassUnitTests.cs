@@ -1,4 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// Name: Joshua Wood
+// Student number: ST10296167
+// Group: 2
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using JoshuaWood_ST10296167_PROG6221_POE.Classes;
 

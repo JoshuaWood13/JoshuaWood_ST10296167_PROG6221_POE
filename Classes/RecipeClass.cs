@@ -19,17 +19,16 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 {
     public class RecipeClass
     {
-        //Declaring ingredient and step arrays that will store all ingredient and step information  
-        private string[] stepArray;
-        private IngredientsClass[] ingredientArray;
-
+        //Declaring ingredient and step Lists that will store all ingredient and step information  
         private List<string> stepList { get; set; }
         public List<IngredientsClass> ingredientList { get; set; }
+
         public string recipeName { get; set; }
         public double recipeCalorieTotal { get; set; }
-
+        //Declaring delegate for the calorie alert
         public delegate void calorieAlert(double num);
         
+        //Constructor
         public RecipeClass()
         {
             ingredientList = new List<IngredientsClass>();
@@ -167,6 +166,8 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             return result;
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method takes a users string input and checks if it is null or contains digits. If so, the user is prompted again until they enter
+        //a valid string
         private static string validString()
         {
             while (true)
@@ -185,7 +186,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method prompts the user for all recipe ingredient details and all recipe steps and saves these details in arrays
+        //This method prompts the user for all recipe ingredient details and all recipe steps and saves these details in Lists
         private void inputRecipeDetails(RecipeManagerClass r)
         {
             //Stores the number of ingredients in the recipe
@@ -212,57 +213,42 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.WriteLine();
             Console.WriteLine("--------------------------------");
 
-            //Initializing an ingredient array and setting its size to the user's input
-            //ingredientArray = new IngredientsClass[ingredientNum];
-            //This for loop iterates over each element of the ingredient array
             double calorieCount = 0;
             for (int i = 0; i < ingredientNum; i++)
             {
                 string decision;
                 //Create a new IngredientsClass object
-                //ingredientArray[i] = new IngredientsClass();
-
                 IngredientsClass ingredient = new IngredientsClass();
 
                 //Prompts user to enter ingredient name
                 Console.Write($"Enter ingredient {count} name: ");
                 //Assings ingredient name to user input
-                //ingredientArray[i].ingredientName = Console.ReadLine();
-
                 ingredient.ingredientName = validString();
                 Console.WriteLine();
                 //Prompts the user to enter ingredient quantity
                 Console.Write($"Enter ingredient {count} quantity: ");
                 //Assigns ingredient quantity to a valid quantity input by the user
-                //ingredientArray[i].ingredientQuantity = validQuantity(Console.ReadLine());
-
                 ingredient.ingredientQuantity = validDouble(Console.ReadLine(),1);
-
-                //ingredient.ingredientCalories = validDouble(Console.ReadLine());
-                //recipe.recipeCalorieTotal += ingredient.ingredientCalories;   //calc problem
                 Console.WriteLine();
 
                 //Stores the choice for measurement unit in variable
-                //unitDecision = ingredientArray[i].decideUnit();
-
                 decision = ingredient.decideUnit();
 
                 //Uses unitDecision to assign the correct measurement unit to the ingredient
-                //ingredientArray[i].assignUnit(ingredientArray[i], unitDecision);
-
                 ingredient.assignUnit(ingredient, decision);
                 Console.WriteLine();
-
+                //Showing an explanation to the user of what a food group is
                 Console.WriteLine("***************************************************************************************************");
                 Console.WriteLine("A food group is a collection of foods that share similar nutrional properties.");
                 Console.WriteLine("Each of the 7 food groups are essential in ensuring we have a healthy and balanced diet!");    // (Twinkl,2024)
                 Console.WriteLine("***************************************************************************************************");
                 Console.WriteLine();
 
+                //Takes a users decision and assings it as the food group 
                 decision = ingredient.decideFoodGroup();
                 ingredient.assignFoodGroup(ingredient, decision);
 
-
+                //Showing an explanation to the user of what a calorie is
                 Console.WriteLine();
                 Console.WriteLine("***************************************************************************************************");
                 Console.WriteLine("A calorie is a unit of energy that refer to the energy people get from food and drink they consume.");
@@ -275,9 +261,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
                 calorieCount += ingredient.ingredientCalories;
                 calorieCheck(calorieCount, caloriesExceeded);
-                //Saves all the ingredient information 
-                //ingredientArray[i].saveOriginal();
-
+                //Saves all the ingredient information and adds the ingredient to the ingredient List
                 ingredient.saveOriginal();
                 recipe.ingredientList.Add(ingredient);
 
@@ -285,6 +269,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 Console.WriteLine("--------------------------------");
                 count++;
             }
+            //Calls method to calculate and assing the total calories for the recipe, then displays this information to the user 
             recipe.recipeCalorieTotal = calculateCalorieTotal(recipe.ingredientList);
             displayCalorieTotal(recipe.recipeCalorieTotal);
             Console.WriteLine();
@@ -293,28 +278,23 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             //Assigns step number to a valid number entered by user
             steps = validNum(Console.ReadLine());
             Console.WriteLine();
-            //Initializing step array and setting its size to the number chosen by user
-            //stepArray = new string[steps];
             //Resetting count so that steps can be properly numbered
             count = 1;
-            //This for loop iterates over every element of the step array
+
             for (int j = 0; j < steps; j++)
             {
                 string step;
                 //Prompts the user to enter a step
                 Console.WriteLine($"Please type step {count} below:");
-                //Assings array element to the user's input
-                //stepArray[j] = Console.ReadLine();
-
-                step = Console.ReadLine();
+                //Assings step information based on the user's valid input
+                step = validString();
                 recipe.stepList.Add(step);
-
                 Console.WriteLine();
                 count++;
             }
-
+            //Adds recipe to the recipe List
             r.addRecipe(recipe);
-            r.sortAlphabeticalOrder();
+            //r.sortAlphabeticalOrder();
             Console.WriteLine("Recipe Created!");
             Console.WriteLine();
         }
@@ -325,12 +305,9 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.WriteLine();
             borderColour("---------DISPLAY RECIPE---------", ConsoleColor.DarkMagenta);
             RecipeClass selected = r.displayOrderedRecipes("display");
-            //bool c = true;
-            //Console.WriteLine();
-            //borderColour("---------FULL RECIPE---------", ConsoleColor.Magenta);
 
             //Checks if recipe exists before attempting to display
-            if(selected != null/* ingredientArray != null*/)
+            if(selected != null)
             {
                 Console.WriteLine();
                 borderColour("---------FULL RECIPE---------", ConsoleColor.Magenta);
@@ -346,8 +323,8 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 Console.WriteLine("Ingredients:");
                 //Count initialized in order to number ingredients
                 int count = 1;
-                //Displays the ingredient information for each ingredientsClass object in the ingredient array 
-                foreach (IngredientsClass i in selected.ingredientList /*IngredientsClass i in ingredientArray*/)
+                //Displays the ingredient information for each ingredientsClass object in the ingredient List 
+                foreach (IngredientsClass i in selected.ingredientList)
                 {
                     Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
                     count++;
@@ -358,7 +335,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 Console.WriteLine("Steps:");
                 //Count is reset in order to number the steps
                 count = 1;
-                //Displays each string element in the step array
+                //Displays each string element in the step List
                 foreach (string x in selected.stepList)
                 {
                     Console.WriteLine($"{count}. {x}");
@@ -392,7 +369,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             RecipeClass selected = r.displayOrderedRecipes("scale");
 
             //Checks if a recipe exists 
-            if (selected != null /*ingredientArray != null*/)
+            if (selected != null)
             {
                 //Displays scaling options
                 Console.WriteLine("1) Half");
@@ -429,7 +406,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                     scaleFactor = 3;
                 }
 
-                //Each IngredientsClass object in the ingredient array is scaled based on the chosen scale factor 
+                //Each IngredientsClass object in the ingredient List is scaled based on the chosen scale factor 
                 foreach (IngredientsClass i in selected.ingredientList)
                 {
                     i.scaleIngredients(i, scaleFactor);
@@ -444,7 +421,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method resets all IngredientClass object's quantities in the ingredient array to the original values first entered by the user
+        //This method resets all IngredientClass object's quantities in the ingredient List to the original values first entered by the user
         private void resetValues(RecipeManagerClass r)
         {
             Console.WriteLine();
@@ -455,7 +432,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             //Checks if a recipe exists 
             if (selected != null)
             {
-                //Each IngredientsClass object's quantities in the ingredient array are assigned to the saved original values
+                //Each IngredientsClass object's quantities in the ingredient List are assigned to the saved original values
                 foreach (IngredientsClass i in selected.ingredientList)
                 {
                     i.ingredientQuantity = i.originalQuantity;
@@ -484,28 +461,36 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method clears all ingredient array and step array values if a user confirms the action
+        //This method clears all ingredient List and step List values if a user confirms the action
         private void clearRecipe(RecipeManagerClass r)
         {
             Console.WriteLine();
             borderColour("---------CLEAR RECIPE---------", ConsoleColor.Red);
-            Console.WriteLine();
+            //Console.WriteLine();
             RecipeClass selected = r.displayOrderedRecipes("clear");
-            //Clears values if user confirms 
-            if (confrimPrompt())
+
+            if(selected != null)
             {
-                ingredientArray = null;
-                stepArray = null;
-                r.removeRecipe(selected);
-                Console.WriteLine();
-                Console.WriteLine("Recipe has been cleared!");
-                Console.WriteLine();
+                //Clears values if user confirms 
+                if (confrimPrompt())
+                {
+                    r.removeRecipe(selected);
+                    Console.WriteLine();
+                    Console.WriteLine("Recipe has been cleared!");
+                    Console.WriteLine();
+                }
+                //Does not clear values if user declines
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Recipe will not be cleared!");
+                    Console.WriteLine();
+                }
             }
-            //Does not clear values if user declines
             else
             {
                 Console.WriteLine();
-                Console.WriteLine("Recipe will not be cleared!");
+                Console.WriteLine("No Recipe found. Please create a recipe before clearing");
                 Console.WriteLine();
             }
         }
@@ -564,6 +549,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.ResetColor();
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method accepts the calorie total as a parameter and then displays the appropraite explanation depending on the amount
         private static void displayCalorieTotal(double total)
         {
             Console.WriteLine();
@@ -602,6 +588,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             }
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method calculates the total calories for a recipe by adding the calories of each ingredient from the recipe together
         public double calculateCalorieTotal(List<IngredientsClass> ingredients)
         {
             double total = 0;
@@ -614,11 +601,13 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             return total;
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method calls the calorie alert delegate and passes the current calorie count to it
         private static void calorieCheck(double num, calorieAlert alert)
         {
             alert(num);
         }
 //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method matches the signature of the delegate and displays a calorie warning if the calories exceed 300
         private static void caloriesExceeded(double num)
         {
             if(num > 300)
