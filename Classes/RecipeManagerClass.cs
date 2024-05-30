@@ -44,11 +44,14 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
 
             recipeList = recipeList.OrderBy(r => r.recipeName).ToList(); // (IronPdf,2024).
             int count = 1;
+            Console.WriteLine();
+            Console.WriteLine("################################");
             foreach (RecipeClass recipe in recipeList)
             {
                 Console.WriteLine($"{count}. {recipe.recipeName}");
                 count++;
             }
+            Console.WriteLine("################################");
             Console.WriteLine();
 
             while (true)
@@ -62,6 +65,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                     }
                     else
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Invalid recipe number. Please select a valid number.");
                         Console.WriteLine();
                     }

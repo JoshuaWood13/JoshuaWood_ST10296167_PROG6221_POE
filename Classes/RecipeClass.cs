@@ -220,6 +220,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 //Create a new IngredientsClass object
                 IngredientsClass ingredient = new IngredientsClass();
 
+                Console.WriteLine();
                 //Prompts user to enter ingredient name
                 Console.Write($"Enter ingredient {count} name: ");
                 //Assings ingredient name to user input
@@ -238,10 +239,10 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
                 ingredient.assignUnit(ingredient, decision);
                 Console.WriteLine();
                 //Showing an explanation to the user of what a food group is
-                Console.WriteLine("***************************************************************************************************");
+                Console.WriteLine("****************************************************************************************");
                 Console.WriteLine("A food group is a collection of foods that share similar nutrional properties.");
                 Console.WriteLine("Each of the 7 food groups are essential in ensuring we have a healthy and balanced diet!");    // (Twinkl,2024)
-                Console.WriteLine("***************************************************************************************************");
+                Console.WriteLine("****************************************************************************************");
                 Console.WriteLine();
 
                 //Takes a users decision and assings it as the food group 
@@ -426,7 +427,6 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
         {
             Console.WriteLine();
             borderColour("---------RESET RECIPE---------", ConsoleColor.DarkYellow);
-            Console.WriteLine();
             RecipeClass selected = r.displayOrderedRecipes("reset");
 
             //Checks if a recipe exists 
@@ -556,6 +556,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
             Console.WriteLine($"Total calories in recipe: {total}");
             Console.WriteLine();
             Console.WriteLine("Explanation:");
+            Console.WriteLine();
             if (total <= 100)
             {
                 Console.WriteLine("This recipe is very low in calories, making it a great option for a light snack or a side dish.");
