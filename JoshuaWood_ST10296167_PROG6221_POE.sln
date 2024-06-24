@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoshuaWood_ST10296167_PROG6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests_POE", "UnitTests_POE\UnitTests_POE.csproj", "{1B6AFD74-CD06-4242-8973-8C021AA6AAE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp_POE_Part3", "WpfApp_POE_Part3\WpfApp_POE_Part3.csproj", "{7D012AC5-595D-4C93-B380-5603E39AD0BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1B6AFD74-CD06-4242-8973-8C021AA6AAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B6AFD74-CD06-4242-8973-8C021AA6AAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B6AFD74-CD06-4242-8973-8C021AA6AAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D012AC5-595D-4C93-B380-5603E39AD0BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D012AC5-595D-4C93-B380-5603E39AD0BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D012AC5-595D-4C93-B380-5603E39AD0BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D012AC5-595D-4C93-B380-5603E39AD0BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
