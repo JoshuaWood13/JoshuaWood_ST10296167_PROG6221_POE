@@ -33,7 +33,7 @@ namespace WpfApp_Part3_POE.Classes
             int ingredientNum = 1;
             foreach (IngredientsClass ingredient in recipe.ingredientList)
             {
-                display.AppendLine($"{ingredientNum}. {ingredient.ingredientName}");
+                display.AppendLine($"{ingredientNum}. {ingredient.ingredientQuantity} {ingredient.measurementUnitName}(s) of {ingredient.ingredientName}");
                 ingredientNum++;
             }
             display.AppendLine("\nSteps:\n");

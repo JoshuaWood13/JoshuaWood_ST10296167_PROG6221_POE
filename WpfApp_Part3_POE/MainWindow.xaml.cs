@@ -23,27 +23,58 @@ namespace WpfApp_Part3_POE
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel viewModel;
         //public RecipeManagerClass RecipeManager { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
 
             // Set the DataContext to the MainWindowViewModel
-            var viewModel = new MainWindowViewModel();
+            //var viewModel = new MainWindowViewModel();
+            viewModel = new MainWindowViewModel();
             DataContext = viewModel;
 
-            // Handle tab selection change
-            MainTabControl.SelectionChanged += (s, e) =>
+            MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
+        }
+
+        private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MainTabControl.SelectedIndex == 0) // Create Recipe tab
             {
-                if (MainTabControl.SelectedIndex == 0) // Assuming the "Create Recipe" tab is the first tab
-                {
-                    viewModel.ResetCreateRecipeViewModel();
-                }
-                else if (MainTabControl.SelectedIndex == 1) // Assuming the "Display Recipe" tab is the second tab
-                {
-                    viewModel.DisplayRecipeViewModel.RefreshRecipeList();
-                }
-            };
+                viewModel.ResetCreateRecipeViewModel();
+                // Reset the DataContext of the View1 to the new CreateRecipeViewModel
+                var createRecipeView = (Views.View1)((TabItem)MainTabControl.Items[0]).Content;
+                createRecipeView.DataContext = viewModel.CreateRecipeViewModel;
+            }
+            else if (MainTabControl.SelectedIndex == 1) // Display Recipe tab
+            {
+                viewModel.DisplayRecipeViewModel.RefreshRecipeList();
+            }
+            else if (MainTabControl.SelectedIndex == 2) // Scale Recipe tab
+            {
+                viewModel.ScaleRecipeViewModel.RefreshRecipeList();
+            }
+        }
+        // Handle tab selection change
+        //MainTabControl.SelectionChanged += (s, e) =>
+        //    {
+        //        if (MainTabControl.SelectedIndex == 0) // Assuming the "Create Recipe" tab is the first tab
+        //        {
+        //            viewModel.ResetCreateRecipeViewModel();
+        //        }
+        //        else if (MainTabControl.SelectedIndex == 1) // Assuming the "Display Recipe" tab is the second tab
+        //        {
+        //            viewModel.DisplayRecipeViewModel.RefreshRecipeList();
+        //        }
+        //        else if(MainTabControl.SelectedIndex == 2)
+        //        {
+        //            viewModel.ScaleRecipeViewModel.RefreshRecipeList();
+        //        }
+        //    };
+
+
+
+
             // Set the DataContext to the MainWindowViewModel
             //DataContext = new MainWindowViewModel();
             //RecipeManager = new RecipeManagerClass();
@@ -51,6 +82,6 @@ namespace WpfApp_Part3_POE
             //// Pass the RecipeManager instance to the ViewModels
             //var createRecipeViewModel = new CreateRecipeViewModel(RecipeManager);
             //View1.DataContext = createRecipeViewModel;
-        }
     }
 }
+
