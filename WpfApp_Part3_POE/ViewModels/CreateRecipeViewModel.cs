@@ -248,6 +248,7 @@ namespace WpfApp_Part3_POE.ViewModels
                     
                 };
 
+                ingredient.assignUnit(ingredient, ingredient.measurementUnitName);
                 ingredient.saveOriginal();
 
                 currentRecipe.ingredientList.Add(ingredient);

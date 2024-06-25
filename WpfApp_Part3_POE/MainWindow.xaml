@@ -19,8 +19,8 @@
             <TabItem Header="Display Recipe">
                 <local:View2 DataContext="{Binding DisplayRecipeViewModel}" />
             </TabItem>
-            <TabItem Header="Tab 3">
-                <local:View3 />
+            <TabItem Header="Scale Recipe">
+                <local:View3 DataContext="{Binding ScaleRecipeViewModel}"/>
             </TabItem>
             <TabItem Header="Tab 4">
                 <local:View4 />

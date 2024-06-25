@@ -97,32 +97,32 @@ namespace WpfApp_Part3_POE.Classes
         }
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method takes a user's valid choice as the input parameter, to assign the correct measurement unit name and value to the ingredientClass object i parameter
-        public void assignUnit(IngredientsClass i, string input)
+        public void assignUnit(IngredientsClass i, string selection)
         {
-            switch (input)
+            switch (selection)
             {
                 //Assigns a ml or gram equivalent amount for ingredient quantity that will be used to accurately scale values later
-                case "1":
+                case "Teaspoons (tsp)":
                     i.measurementUnitName = "tsp";
                     i.measurementUnitMl = i.ingredientQuantity * 5;  // 1 tsp = 5ml (Exploratorium, 2024)
                     break;
 
-                case "2":
+                case "Tablespoons (tbsp)":
                     i.measurementUnitName = "Tbsp";
                     i.measurementUnitMl = i.ingredientQuantity * 15;  // 1 Tbsp = 15ml (Exploratorium, 2024)
                     break;
 
-                case "3":
+                case "Cups (C)":
                     i.measurementUnitName = "C";
                     i.measurementUnitMl = i.ingredientQuantity * 240;  // 1 Cup = 240ml (Exploratorium, 2024)
                     break;
 
-                case "4":
+                case "Grams (g)":
                     i.measurementUnitName = "g";
                     i.measurementUnitGrams = i.ingredientQuantity;
                     break;
 
-                case "5":
+                case "Kilograms (kg)":
                     i.measurementUnitName = "kg";
                     i.measurementUnitGrams = i.ingredientQuantity * 1000;  // 1 kg = 1000 grams 
                     break;

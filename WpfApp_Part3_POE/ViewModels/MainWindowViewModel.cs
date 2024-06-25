@@ -10,10 +10,10 @@ namespace WpfApp_Part3_POE.ViewModels
     public class MainWindowViewModel
     {
         public CreateRecipeViewModel CreateRecipeViewModel { get; private set; }
-        //public CreateRecipeViewModel CreateRecipeViewModel { get; }
         public DisplayRecipeViewModel DisplayRecipeViewModel { get; private set; }
+        public ScaleRecipeViewModel ScaleRecipeViewModel { get; private set; }
 
-        private RecipeManagerClass recipeManager;
+    private RecipeManagerClass recipeManager;
         public MainWindowViewModel()
         {
             recipeManager = new RecipeManagerClass();
@@ -27,6 +27,7 @@ namespace WpfApp_Part3_POE.ViewModels
             //var recipeManager = new RecipeManagerClass();
             CreateRecipeViewModel = new CreateRecipeViewModel(recipeManager);
             DisplayRecipeViewModel = new DisplayRecipeViewModel(recipeManager);
+            ScaleRecipeViewModel = new ScaleRecipeViewModel(recipeManager);
 
             CreateRecipeViewModel.RecipeSubmitted += CreateRecipeViewModel_RecipeSubmitted;
         }
@@ -35,6 +36,7 @@ namespace WpfApp_Part3_POE.ViewModels
         {
             ResetCreateRecipeViewModel();
             DisplayRecipeViewModel.RefreshRecipeList();
+            ScaleRecipeViewModel.RefreshRecipeList();
         }
 
         public void ResetCreateRecipeViewModel()

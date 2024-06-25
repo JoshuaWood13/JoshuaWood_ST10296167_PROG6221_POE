@@ -66,6 +66,7 @@
     <Compile Include="ViewModels\CreateRecipeViewModel.cs" />
     <Compile Include="ViewModels\DisplayRecipeViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ScaleRecipeViewModel.cs" />
     <Compile Include="ViewModels\View1ViewModel.cs" />
     <Compile Include="ViewModels\View2ViewModel.cs" />
     <Compile Include="ViewModels\View3ViewModel.cs" />

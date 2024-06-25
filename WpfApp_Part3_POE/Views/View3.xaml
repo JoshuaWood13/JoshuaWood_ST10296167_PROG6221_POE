@@ -8,17 +8,23 @@
 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="View 3" FontSize="20" Margin="10"/>
-            <TextBox Text="{Binding UserInput, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>
-            <Button Content="Submit">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SubmitCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+    <Grid Background="BlanchedAlmond">
+        <StackPanel Margin="20" Background="BlanchedAlmond" HorizontalAlignment="Center" Width="300">
+            <Label Content="Scale Recipe" FontSize="24" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+
+            <Label Content="Select Filter:" FontSize="16" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            <ComboBox x:Name="FilterComboBox" Width="200" Margin="0,5,0,0" HorizontalAlignment="Center"
+                      ItemsSource="{Binding FilterOptions}" SelectedItem="{Binding SelectedFilter}"/>
+            <Button Content="Confirm Filter" Command="{Binding ConfirmFilterCommand}" Width="150" Margin="0,15,0,0" HorizontalAlignment="Center"/>
+
+            <Label Content="Select Recipe:" FontSize="16" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            <ComboBox x:Name="RecipeComboBox" Width="200" Margin="0,5,0,0" HorizontalAlignment="Center"
+                      ItemsSource="{Binding FilteredRecipes}" DisplayMemberPath="recipeName" SelectedItem="{Binding SelectedRecipe}"/>
+
+            <Label Content="Scaling Factor:" FontSize="16" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            <ComboBox x:Name="ScalingFactorComboBox" Width="100" Margin="0,5,0,0" HorizontalAlignment="Center"
+                      ItemsSource="{Binding ScalingFactors}" SelectedItem="{Binding SelectedScalingFactor}"/>
+            <Button Content="Scale Recipe" Command="{Binding ScaleRecipeCommand}" Width="150" Margin="0,15,0,0" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>
