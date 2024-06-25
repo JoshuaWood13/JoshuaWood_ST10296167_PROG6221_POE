@@ -31,6 +31,7 @@ namespace WpfApp_POE_Part3
             //CreateRecipeContent.Content = new CreateRecipeUserControl(recipeList);
         }
 
+//------------------------------------------------------------------------------------------------------------------------------------------//
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MainTabControl.SelectedItem is TabItem tabItem)
@@ -44,10 +45,15 @@ namespace WpfApp_POE_Part3
                     case "Home":
                         // Code for home tab if needed
                         break;
-                    case "View Recipes":
+                    case "Display Recipe":
+
+                            //tabItem.Content = new DisplayRecipeUserControl(recipeList);
+                        
+                        //DisplayRecipeContent = new DisplayRecipeUserControl(recipeList);
+                        //tabItem.Content = DisplayRecipeContent;
                         // Code for view recipes tab if needed
                         break;
-                    case "Edit Recipe":
+                    case "Scale Recipe":
                         // Code for edit recipe tab if needed
                         break;
                     case "Delete Recipe":
@@ -58,7 +64,7 @@ namespace WpfApp_POE_Part3
                 }
             }
         }
-
+//------------------------------------------------------------------------------------------------------------------------------------------//
         public void SwitchToHomeTab()
         {
             MainTabControl.SelectedIndex = 0; // Index of the Home tab

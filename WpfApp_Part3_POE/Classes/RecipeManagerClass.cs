@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp_POE_Part3.Classes
+namespace WpfApp_Part3_POE.Classes
 {
     public class RecipeManagerClass
     {
-        private List<RecipeClass> recipeList { get; set; }
+        public List<RecipeClass> recipeList { get; set; }
 
         //Constructor
         public RecipeManagerClass()
         {
             recipeList = new List<RecipeClass>();
         }
+
         //------------------------------------------------------------------------------------------------------------------------------------------//
         public void addRecipe(RecipeClass recipe)
         {
@@ -25,9 +26,7 @@ namespace WpfApp_POE_Part3.Classes
         {
             recipeList.Remove(recipe);
         }
-        //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method sorts the recipe List alphabetically by recipe name and then displays the list of recipes and gets user input to select
-        //a recipe from the list. This recipe is then returned
+
         public List<RecipeClass> getOrderedRecipes(List<RecipeClass> list)
         {
             //if (list == null || list.Count == 0)
@@ -38,6 +37,9 @@ namespace WpfApp_POE_Part3.Classes
             list = list.OrderBy(r => r.recipeName).ToList(); // (IronPdf,2024).
             return list;
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        //This method sorts the recipe List alphabetically by recipe name and then displays the list of recipes and gets user input to select
+        //a recipe from the list. This recipe is then returned
         public RecipeClass displayOrderedRecipes(string prompt)
         {
             if (recipeList == null || recipeList.Count == 0)

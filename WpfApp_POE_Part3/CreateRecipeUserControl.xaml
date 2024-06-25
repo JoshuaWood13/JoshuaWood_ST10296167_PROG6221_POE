@@ -10,7 +10,7 @@
     <Grid Background="Wheat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Border BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="0, 0, 0, 0">
-                <TextBlock Text="Enter Recipe Details" FontSize="20" Margin="10" HorizontalAlignment="Center"/>
+                <TextBlock Text="Enter Recipe Details" FontSize="40" Margin="10" HorizontalAlignment="Center"/>
 
                 <StackPanel HorizontalAlignment="Center" Margin="0">
                     <Label Content="Recipe Name:" Margin="0 0 0 0" HorizontalAlignment="Center"/>
@@ -24,7 +24,7 @@
                 </StackPanel>
 
                 <Border x:Name="InputBorder" BorderBrush="Black" BorderThickness="1" Margin="25" Height="300" Width="500" Visibility="Collapsed"> <!--Visibility="Collapsed"-->
-                    <StackPanel x:Name="InputPanel" HorizontalAlignment="Center" Background="White" Margin="10">
+                    <StackPanel x:Name="InputPanel" HorizontalAlignment="Center" Background="White" Margin="0, 0, 0, 0">
 
                     </StackPanel>
                 </Border>

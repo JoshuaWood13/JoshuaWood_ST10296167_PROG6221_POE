@@ -20,7 +20,7 @@ namespace JoshuaWood_ST10296167_PROG6221_POE.Classes
     public class RecipeClass
     {
         //Declaring ingredient and step Lists that will store all ingredient and step information  
-        private List<string> stepList { get; set; }
+        public List<string> stepList { get; set; }
         public List<IngredientsClass> ingredientList { get; set; }
 
         public string recipeName { get; set; }

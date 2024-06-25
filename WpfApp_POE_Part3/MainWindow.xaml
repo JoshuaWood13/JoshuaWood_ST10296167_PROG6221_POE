@@ -16,10 +16,11 @@
                 <ContentControl Name="CreateRecipeContent"/>
                 <!-- Content for Create Recipe will go here -->
             </TabItem>
-            <TabItem Header="View Recipes">
+            <TabItem Header="Display Recipe">
+                <ContentControl Name="DisplayRecipeContent"/>
                 <!-- Content for View Recipes will go here -->
             </TabItem>
-            <TabItem Header="Edit Recipe">
+            <TabItem Header="Scale Recipe">
                 <!-- Content for Edit Recipe will go here -->
             </TabItem>
             <TabItem Header="Delete Recipe">

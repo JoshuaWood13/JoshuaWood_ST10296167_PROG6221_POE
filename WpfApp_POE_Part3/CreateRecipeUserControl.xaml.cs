@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +29,18 @@ namespace WpfApp_POE_Part3
         public int numOfSteps;
         private RecipeManagerClass recipeList;
 
+        private ObservableCollection<string> unitItems;
+        private ObservableCollection<string> foodGroupItems;
+
         public CreateRecipeUserControl(RecipeManagerClass recipeList)
         {
             InitializeComponent();
             recipe = new RecipeClass();
             this.recipeList = recipeList;
+
+            // Initialize the ObservableCollection
+            unitItems = new ObservableCollection<string> { "Teaspoons (tsp)", "Tablespoons (tbsp)", "Cups (C)", "Grams (g)", "Kilograms (kg)" };
+            foodGroupItems = new ObservableCollection<string> { "Starchy foods", "Vegetables and fruits", "Dry beans, peas, lentils and soya", "Chicken, fish, meat and eggs", "Milk and dairy", "Fats and oil", "Water" };
         }
 
 //------------------------------------------------------------------------------------------------------------------------------------------//
@@ -252,7 +260,7 @@ namespace WpfApp_POE_Part3
             {
                 Name = $"IngredientUnitComboBox_{ingredientIndex}",
                 Width = 130,
-                ItemsSource = new List<string> { "Teaspoons (tsp)", "Tablespoons (tbsp)", "Cups (C)", "Grams (g)", "Kilograms (kg)" },
+                ItemsSource = unitItems, /*new List<string> { "Teaspoons (tsp)", "Tablespoons (tbsp)", "Cups (C)", "Grams (g)", "Kilograms (kg)" },*/
                 SelectedIndex = 0,
                 HorizontalAlignment = HorizontalAlignment.Center
             };
@@ -264,7 +272,7 @@ namespace WpfApp_POE_Part3
             {
                 Name = $"FoodGroupComboBox_{ingredientIndex}",
                 Width = 200,
-                ItemsSource = new List<string> { "Starchy foods", "Vegetables and fruits", "Dry beans, peas, lentils and soya", "Chicken, fish, meat and eggs", "Milk and dairy", "Fats and oil", "Water" },
+                ItemsSource = foodGroupItems, /*new List<string> { "Starchy foods", "Vegetables and fruits", "Dry beans, peas, lentils and soya", "Chicken, fish, meat and eggs", "Milk and dairy", "Fats and oil", "Water" },*/
                 SelectedIndex = 0,
                 HorizontalAlignment = HorizontalAlignment.Center
             };

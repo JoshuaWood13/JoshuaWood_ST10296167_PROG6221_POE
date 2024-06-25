@@ -1,0 +1,31 @@
+﻿<Window x:Class="WpfApp_Part3_POE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp_Part3_POE.Views"
+        xmlns:viewModels="clr-namespace:WpfApp_Part3_POE.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <TabControl Name="MainTabControl" >
+            <TabItem Header="Create Recipe">
+                <local:View1 DataContext="{Binding CreateRecipeViewModel}" />
+                <!--<local:View1 />-->
+            </TabItem>
+            <TabItem Header="Display Recipe">
+                <local:View2 DataContext="{Binding DisplayRecipeViewModel}" />
+            </TabItem>
+            <TabItem Header="Tab 3">
+                <local:View3 />
+            </TabItem>
+            <TabItem Header="Tab 4">
+                <local:View4 />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
+

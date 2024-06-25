@@ -1,50 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp_POE_Part3.Classes
+namespace WpfApp_Part3_POE.Classes
 {
-    public class RecipeClass : INotifyPropertyChanged
+    public class RecipeClass
     {
         //Declaring ingredient and step Lists that will store all ingredient and step information  
         public List<string> stepList { get; set; }
         public List<IngredientsClass> ingredientList { get; set; }
 
-        //public string recipeName { get; set; }
-        //public double recipeCalorieTotal { get; set; }
-        private string _recipeName;
-        private double _recipeCalorieTotal;
+        public string recipeName { get; set; }
+        public double recipeCalorieTotal { get; set; }
         //Declaring delegate for the calorie alert
         public delegate void calorieAlert(double num);
-
-        public string recipeName
-        {
-            get { return _recipeName; }
-            set
-            {
-                if (_recipeName != value)
-                {
-                    _recipeName = value;
-                    OnPropertyChanged(nameof(recipeName));
-                }
-            }
-        }
-
-        public double recipeCalorieTotal
-        {
-            get { return _recipeCalorieTotal; }
-            set
-            {
-                if (_recipeCalorieTotal != value)
-                {
-                    _recipeCalorieTotal = value;
-                    OnPropertyChanged(nameof(recipeCalorieTotal));
-                }
-            }
-        }
 
         //Constructor
         public RecipeClass()
@@ -53,12 +24,27 @@ namespace WpfApp_POE_Part3.Classes
             stepList = new List<string>();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name)
+        public string displayRecipeDetails(RecipeClass recipe)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            StringBuilder display = new StringBuilder();
+            display.AppendLine($"Recipe: {recipe.recipeName}\n");
+            display.AppendLine($"Calories: {recipe.recipeCalorieTotal}\n");
+            display.AppendLine($"Ingredients: \n");
+            int ingredientNum = 1;
+            foreach (IngredientsClass ingredient in recipe.ingredientList)
+            {
+                display.AppendLine($"{ingredientNum}. {ingredient.ingredientName}");
+                ingredientNum++;
+            }
+            display.AppendLine("\nSteps:\n");
+            int stepNum = 1;
+            foreach(var step in recipe.stepList)
+            {
+                display.AppendLine($"{stepNum}. {step}");
+                stepNum++;
+            }
+            return display.ToString();
         }
-
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method provides a menu of recipe actions and prompts the user to choose what action they would like to perform.
         //It then returns a valid choice
@@ -149,7 +135,7 @@ namespace WpfApp_POE_Part3.Classes
         //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method accepts a user's input as a parameter and checks if the input is an integer. If not the user is prompted to enter an integer.
         //A valid integer is then returned
-        public int validNum(string input)
+        private static int validNum(string input)
         {
             //Stores converted integer
             int result;
@@ -647,4 +633,4 @@ namespace WpfApp_POE_Part3.Classes
         }
     }
 }
- 
+//--------------------------------------------------------X END OF FILE X-------------------------------------------------------------------//
