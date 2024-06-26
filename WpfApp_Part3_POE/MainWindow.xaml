@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp_Part3_POE.Views"
         xmlns:viewModels="clr-namespace:WpfApp_Part3_POE.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Recipe Generator" Height="450" Width="800">
     <Window.DataContext>
         <viewModels:MainWindowViewModel />
     </Window.DataContext>
@@ -14,7 +14,6 @@
         <TabControl Name="MainTabControl" >
             <TabItem Header="Create Recipe">
                 <local:View1 DataContext="{Binding CreateRecipeViewModel}" />
-                <!--<local:View1 />-->
             </TabItem>
             <TabItem Header="Display Recipe">
                 <local:View2 DataContext="{Binding DisplayRecipeViewModel}" />
@@ -22,8 +21,8 @@
             <TabItem Header="Scale Recipe">
                 <local:View3 DataContext="{Binding ScaleRecipeViewModel}"/>
             </TabItem>
-            <TabItem Header="Tab 4">
-                <local:View4 />
+            <TabItem Header="Delete Recipe">
+                <local:View4 DataContext="{Binding DeleteRecipeViewModel}"/>
             </TabItem>
         </TabControl>
     </Grid>

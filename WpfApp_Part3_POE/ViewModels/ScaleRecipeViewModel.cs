@@ -27,6 +27,7 @@ namespace WpfApp_Part3_POE.ViewModels
             FilterOptions = new ObservableCollection<string> { "None", "Ingredient", "Food Group", "Max Calories" };
             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
             ScalingFactors = new ObservableCollection<double> { 0.5, 2, 3 };
+            SelectedFilter = "None"; // Set initial selection to "None"
         }
 
         public ObservableCollection<string> FilterOptions { get; }
@@ -189,7 +190,7 @@ namespace WpfApp_Part3_POE.ViewModels
                     }
                     break;
                 default:
-                    MessageBox.Show("DEFAULT APPLIED.");
+                    MessageBox.Show("Please select a filter option to filter recipes.");
                     FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
                     break;
             }

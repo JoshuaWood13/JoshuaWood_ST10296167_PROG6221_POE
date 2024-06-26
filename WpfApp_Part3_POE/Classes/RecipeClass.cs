@@ -95,7 +95,7 @@ namespace WpfApp_Part3_POE.Classes
                 switch (choice)
                 {
                     case "1":
-                        inputRecipeDetails(recipeManager);
+                        //inputRecipeDetails(recipeManager);
                         break;
 
                     case "2":
@@ -124,7 +124,7 @@ namespace WpfApp_Part3_POE.Classes
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method accepts a user's choice and attempts to convert the choice to an int and only returns true if the choice is succesfully
         //converted to an int and that int falls within the range specified by the min and max parameters 
-        private static bool validChoice(string choice, int min, int max)
+        public static bool validChoice(string choice, int min, int max)
         {
             //Stores converted integer 
             int num;
@@ -133,9 +133,9 @@ namespace WpfApp_Part3_POE.Classes
             return valid && num >= min && num <= max;
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------//
-        //This method accepts a user's input as a parameter and checks if the input is an integer. If not the user is prompted to enter an integer.
-        //A valid integer is then returned
-        private static int validNum(string input)
+
+
+        public static int validNum(string input)
         {
             //Stores converted integer
             int result;
@@ -152,163 +152,221 @@ namespace WpfApp_Part3_POE.Classes
         //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method accepts a user's input as a parameter and determines if the input is a double. If not the user is prompted to enter a double
         //A valid double is then returned
-        private static double validDouble(string input, int condition)
+        public bool validDouble(string input)
         {
-            //Stores converted double
             double result;
+            bool isValid;
 
-            //This while loop keeps executing until the user's input is a valid double
-            while (!double.TryParse(input, out result) || result < condition)
-            {
-                if (condition == 1)
-                {
-                    Console.WriteLine();
-                    Console.Write("Please enter a valid non-negative number above zero: ");
-                    input = Console.ReadLine();
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.Write("Please enter a valid non-negative number: ");
-                    input = Console.ReadLine();
-                }
-            }
-            return result;
+            isValid = double.TryParse(input, out result) && result > 0;
+            return isValid;
+        }
+
+        public bool validCalorieDouble(string input)
+        {
+            double result;
+            bool isValid;
+
+            isValid = double.TryParse(input, out result) && result >= 0;
+            return isValid;     
         }
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method takes a users string input and checks if it is null or contains digits. If so, the user is prompted again until they enter
         //a valid string
-        private static string validString()
+        public bool validString(string input)
         {
-            while (true)
-            {
-                string input = Console.ReadLine();
+            bool isValid;
 
-                if (!string.IsNullOrWhiteSpace(input) & !input.Any(char.IsDigit))  // (StackOverflow,2019)
-                {
-                    return input;
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.Write("Invalid input. Please enter a non-empty string without numbers: ");
-                }
+            if(!string.IsNullOrWhiteSpace(input) && !input.Any(char.IsDigit)) // (StackOverflow,2019)
+            {
+                isValid = true;
+                return isValid;
+            }
+            else
+            {
+                isValid= false;
+                return isValid;
             }
         }
+
+
+
+
+        //This method accepts a user's input as a parameter and checks if the input is an integer. If not the user is prompted to enter an integer.
+        //A valid integer is then returned
+        //public static int validNum(string input)
+        //{
+        //    //Stores converted integer
+        //    int result;
+
+        //    //This while loop keeps executing until the user's input is a valid integer
+        //    while (!int.TryParse(input, out result) || result <= 0)
+        //    {
+        //        Console.WriteLine();
+        //        Console.Write("Please enter a valid non-negative number above zero: ");
+        //        input = Console.ReadLine();
+        //    }
+        //    return result;
+        //}
+        ////-----------------------------------------------------------------------------------------------------------------------------------------//
+        ////This method accepts a user's input as a parameter and determines if the input is a double. If not the user is prompted to enter a double
+        ////A valid double is then returned
+        //public static double validDouble(string input, int condition)
+        //{
+        //    //Stores converted double
+        //    double result;
+
+        //    //This while loop keeps executing until the user's input is a valid double
+        //    while (!double.TryParse(input, out result) || result < condition)
+        //    {
+        //        if (condition == 1)
+        //        {
+        //            Console.WriteLine();
+        //            Console.Write("Please enter a valid non-negative number above zero: ");
+        //            input = Console.ReadLine();
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine();
+        //            Console.Write("Please enter a valid non-negative number: ");
+        //            input = Console.ReadLine();
+        //        }
+        //    }
+        //    return result;
+        //}
+        ////------------------------------------------------------------------------------------------------------------------------------------------//
+        ////This method takes a users string input and checks if it is null or contains digits. If so, the user is prompted again until they enter
+        ////a valid string
+        //public static string validString()
+        //{
+        //    while (true)
+        //    {
+        //        string input = Console.ReadLine();
+
+        //        if (!string.IsNullOrWhiteSpace(input) & !input.Any(char.IsDigit))  // (StackOverflow,2019)
+        //        {
+        //            return input;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine();
+        //            Console.Write("Invalid input. Please enter a non-empty string without numbers: ");
+        //        }
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method prompts the user for all recipe ingredient details and all recipe steps and saves these details in Lists
-        private void inputRecipeDetails(RecipeManagerClass r)
-        {
-            //Stores the number of ingredients in the recipe
-            int ingredientNum;
-            //Stores the number of steps for the recipe
-            int steps;
-            //Used to label ingredient and step numbers when iterating through for loops
-            int count = 1;
+        //private void inputRecipeDetails(RecipeManagerClass r)
+        //{
+        //    //Stores the number of ingredients in the recipe
+        //    int ingredientNum;
+        //    //Stores the number of steps for the recipe
+        //    int steps;
+        //    //Used to label ingredient and step numbers when iterating through for loops
+        //    int count = 1;
 
-            RecipeClass recipe = new RecipeClass();
-            bool x = true;
-            Console.WriteLine();
-            borderColour("---------RECIPE DETAILS---------", ConsoleColor.Green);
-            Console.WriteLine();
+        //    RecipeClass recipe = new RecipeClass();
+        //    bool x = true;
+        //    Console.WriteLine();
+        //    borderColour("---------RECIPE DETAILS---------", ConsoleColor.Green);
+        //    Console.WriteLine();
 
-            Console.Write("Enter recipe name: ");
-            recipe.recipeName = validString();
-            Console.WriteLine();
+        //    Console.Write("Enter recipe name: ");
+        //    recipe.recipeName = validString();
+        //    Console.WriteLine();
 
-            //Prompts user for number of ingredients
-            Console.Write("Enter number of ingredients in recipe: ");
-            //Assigns a valid number entered by user
-            ingredientNum = validNum(Console.ReadLine());
-            Console.WriteLine();
-            Console.WriteLine("--------------------------------");
+        //    //Prompts user for number of ingredients
+        //    Console.Write("Enter number of ingredients in recipe: ");
+        //    //Assigns a valid number entered by user
+        //    ingredientNum = validNum(Console.ReadLine());
+        //    Console.WriteLine();
+        //    Console.WriteLine("--------------------------------");
 
-            double calorieCount = 0;
-            for (int i = 0; i < ingredientNum; i++)
-            {
-                string decision;
-                //Create a new IngredientsClass object
-                IngredientsClass ingredient = new IngredientsClass();
+        //    double calorieCount = 0;
+        //    for (int i = 0; i < ingredientNum; i++)
+        //    {
+        //        string decision;
+        //        //Create a new IngredientsClass object
+        //        IngredientsClass ingredient = new IngredientsClass();
 
-                Console.WriteLine();
-                //Prompts user to enter ingredient name
-                Console.Write($"Enter ingredient {count} name: ");
-                //Assings ingredient name to user input
-                ingredient.ingredientName = validString();
-                Console.WriteLine();
-                //Prompts the user to enter ingredient quantity
-                Console.Write($"Enter ingredient {count} quantity: ");
-                //Assigns ingredient quantity to a valid quantity input by the user
-                ingredient.ingredientQuantity = validDouble(Console.ReadLine(), 1);
-                Console.WriteLine();
+        //        Console.WriteLine();
+        //        //Prompts user to enter ingredient name
+        //        Console.Write($"Enter ingredient {count} name: ");
+        //        //Assings ingredient name to user input
+        //        ingredient.ingredientName = validString();
+        //        Console.WriteLine();
+        //        //Prompts the user to enter ingredient quantity
+        //        Console.Write($"Enter ingredient {count} quantity: ");
+        //        //Assigns ingredient quantity to a valid quantity input by the user
+        //        ingredient.ingredientQuantity = validDouble(Console.ReadLine(), 1);
+        //        Console.WriteLine();
 
-                //Stores the choice for measurement unit in variable
-                decision = ingredient.decideUnit();
+        //        //Stores the choice for measurement unit in variable
+        //        decision = ingredient.decideUnit();
 
-                //Uses unitDecision to assign the correct measurement unit to the ingredient
-                ingredient.assignUnit(ingredient, decision);
-                Console.WriteLine();
-                //Showing an explanation to the user of what a food group is
-                Console.WriteLine("****************************************************************************************");
-                Console.WriteLine("A food group is a collection of foods that share similar nutrional properties.");
-                Console.WriteLine("Each of the 7 food groups are essential in ensuring we have a healthy and balanced diet!");    // (Twinkl,2024)
-                Console.WriteLine("****************************************************************************************");
-                Console.WriteLine();
+        //        //Uses unitDecision to assign the correct measurement unit to the ingredient
+        //        ingredient.assignUnit(ingredient, decision);
+        //        Console.WriteLine();
+        //        //Showing an explanation to the user of what a food group is
+        //        Console.WriteLine("****************************************************************************************");
+        //        Console.WriteLine("A food group is a collection of foods that share similar nutrional properties.");
+        //        Console.WriteLine("Each of the 7 food groups are essential in ensuring we have a healthy and balanced diet!");    // (Twinkl,2024)
+        //        Console.WriteLine("****************************************************************************************");
+        //        Console.WriteLine();
 
-                //Takes a users decision and assings it as the food group 
-                decision = ingredient.decideFoodGroup();
-                ingredient.assignFoodGroup(ingredient, decision);
+        //        //Takes a users decision and assings it as the food group 
+        //        decision = ingredient.decideFoodGroup();
+        //        ingredient.assignFoodGroup(ingredient, decision);
 
-                //Showing an explanation to the user of what a calorie is
-                Console.WriteLine();
-                Console.WriteLine("***************************************************************************************************");
-                Console.WriteLine("A calorie is a unit of energy that refer to the energy people get from food and drink they consume.");
-                Console.WriteLine("Calories are essential for human health. The key is consuming the right amount!");  //(MedicalNewsToday,2017)
-                Console.WriteLine("***************************************************************************************************");
-                Console.WriteLine();
+        //        //Showing an explanation to the user of what a calorie is
+        //        Console.WriteLine();
+        //        Console.WriteLine("***************************************************************************************************");
+        //        Console.WriteLine("A calorie is a unit of energy that refer to the energy people get from food and drink they consume.");
+        //        Console.WriteLine("Calories are essential for human health. The key is consuming the right amount!");  //(MedicalNewsToday,2017)
+        //        Console.WriteLine("***************************************************************************************************");
+        //        Console.WriteLine();
 
-                Console.Write($"Enter ingredient {count} calorie count: ");
-                ingredient.ingredientCalories = validDouble(Console.ReadLine(), 0);
+        //        Console.Write($"Enter ingredient {count} calorie count: ");
+        //        ingredient.ingredientCalories = validDouble(Console.ReadLine(), 0);
 
-                calorieCount += ingredient.ingredientCalories;
-                calorieCheck(calorieCount, caloriesExceeded);
-                //Saves all the ingredient information and adds the ingredient to the ingredient List
-                ingredient.saveOriginal();
-                recipe.ingredientList.Add(ingredient);
+        //        calorieCount += ingredient.ingredientCalories;
+        //        calorieCheck(calorieCount, caloriesExceeded);
+        //        //Saves all the ingredient information and adds the ingredient to the ingredient List
+        //        ingredient.saveOriginal();
+        //        recipe.ingredientList.Add(ingredient);
 
-                Console.WriteLine();
-                Console.WriteLine("--------------------------------");
-                count++;
-            }
-            //Calls method to calculate and assing the total calories for the recipe, then displays this information to the user 
-            recipe.recipeCalorieTotal = calculateCalorieTotal(recipe.ingredientList);
-            displayCalorieTotal(recipe.recipeCalorieTotal);
-            Console.WriteLine();
-            //Prompts the user to enter the required number of steps
-            Console.Write("Enter number of recipe steps: ");
-            //Assigns step number to a valid number entered by user
-            steps = validNum(Console.ReadLine());
-            Console.WriteLine();
-            //Resetting count so that steps can be properly numbered
-            count = 1;
+        //        Console.WriteLine();
+        //        Console.WriteLine("--------------------------------");
+        //        count++;
+        //    }
+        //    //Calls method to calculate and assing the total calories for the recipe, then displays this information to the user 
+        //    recipe.recipeCalorieTotal = calculateCalorieTotal(recipe.ingredientList);
+        //    displayCalorieTotal(recipe.recipeCalorieTotal);
+        //    Console.WriteLine();
+        //    //Prompts the user to enter the required number of steps
+        //    Console.Write("Enter number of recipe steps: ");
+        //    //Assigns step number to a valid number entered by user
+        //    steps = validNum(Console.ReadLine());
+        //    Console.WriteLine();
+        //    //Resetting count so that steps can be properly numbered
+        //    count = 1;
 
-            for (int j = 0; j < steps; j++)
-            {
-                string step;
-                //Prompts the user to enter a step
-                Console.WriteLine($"Please type step {count} below:");
-                //Assings step information based on the user's valid input
-                step = validString();
-                recipe.stepList.Add(step);
-                Console.WriteLine();
-                count++;
-            }
-            //Adds recipe to the recipe List
-            r.addRecipe(recipe);
-            //r.sortAlphabeticalOrder();
-            Console.WriteLine("Recipe Created!");
-            Console.WriteLine();
-        }
+        //    for (int j = 0; j < steps; j++)
+        //    {
+        //        string step;
+        //        //Prompts the user to enter a step
+        //        Console.WriteLine($"Please type step {count} below:");
+        //        //Assings step information based on the user's valid input
+        //        step = validString();
+        //        recipe.stepList.Add(step);
+        //        Console.WriteLine();
+        //        count++;
+        //    }
+        //    //Adds recipe to the recipe List
+        //    r.addRecipe(recipe);
+        //    //r.sortAlphabeticalOrder();
+        //    Console.WriteLine("Recipe Created!");
+        //    Console.WriteLine();
+        //}
         //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method displays all stored ingredient and step information for recipe
         private void displayRecipe(RecipeManagerClass r)

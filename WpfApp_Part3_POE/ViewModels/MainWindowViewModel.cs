@@ -12,8 +12,11 @@ namespace WpfApp_Part3_POE.ViewModels
         public CreateRecipeViewModel CreateRecipeViewModel { get; private set; }
         public DisplayRecipeViewModel DisplayRecipeViewModel { get; private set; }
         public ScaleRecipeViewModel ScaleRecipeViewModel { get; private set; }
+        public DeleteRecipeViewModel DeleteRecipeViewModel { get; private set; }
 
-    private RecipeManagerClass recipeManager;
+        private RecipeManagerClass recipeManager;
+        //private bool isCreateRecipeTabInitialized;
+
         public MainWindowViewModel()
         {
             recipeManager = new RecipeManagerClass();
@@ -28,6 +31,7 @@ namespace WpfApp_Part3_POE.ViewModels
             CreateRecipeViewModel = new CreateRecipeViewModel(recipeManager);
             DisplayRecipeViewModel = new DisplayRecipeViewModel(recipeManager);
             ScaleRecipeViewModel = new ScaleRecipeViewModel(recipeManager);
+            DeleteRecipeViewModel = new DeleteRecipeViewModel(recipeManager);
 
             CreateRecipeViewModel.RecipeSubmitted += CreateRecipeViewModel_RecipeSubmitted;
         }
@@ -37,6 +41,7 @@ namespace WpfApp_Part3_POE.ViewModels
             ResetCreateRecipeViewModel();
             DisplayRecipeViewModel.RefreshRecipeList();
             ScaleRecipeViewModel.RefreshRecipeList();
+            DeleteRecipeViewModel.RefreshRecipeList();
         }
 
         public void ResetCreateRecipeViewModel()
@@ -45,9 +50,18 @@ namespace WpfApp_Part3_POE.ViewModels
             CreateRecipeViewModel.RecipeSubmitted += CreateRecipeViewModel_RecipeSubmitted;
         }
 
-        //public void ResetDisplayRecipeViewModel()
+        //public void InitializeCreateRecipeTab()
         //{
-        //    DisplayRecipeViewModel = new DisplayRecipeViewModel(recipeManager);
+        //    if (!isCreateRecipeTabInitialized)
+        //    {
+        //        ResetCreateRecipeViewModel();
+        //        isCreateRecipeTabInitialized = true;
+        //    }
         //}
+
+        public void ClearDisplayedRecipe()
+        {
+            DisplayRecipeViewModel.ClearDisplayedRecipe();
+        }
     }
 }

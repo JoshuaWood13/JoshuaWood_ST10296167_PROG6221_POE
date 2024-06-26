@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,26 +12,31 @@ using WpfApp_Part3_POE.Classes;
 
 namespace WpfApp_Part3_POE.ViewModels
 {
-    public class DisplayRecipeViewModel : INotifyPropertyChanged
+    public class DeleteRecipeViewModel : INotifyPropertyChanged
     {
         private RecipeManagerClass _recipeManager;
         private RecipeClass selectedRecipe;
         private ObservableCollection<RecipeClass> filteredRecipes;
         private string selectedFilter;
-        private string filterName;
-        private string recipeDetails;
-        //private Visibility recipeDetailsVisibility;
 
-        public DisplayRecipeViewModel(RecipeManagerClass recipeManager)
+        public DeleteRecipeViewModel(RecipeManagerClass recipeManager)
         {
             _recipeManager = recipeManager;
             FilterOptions = new ObservableCollection<string> { "None", "Ingredient", "Food Group", "Max Calories" };
             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
             SelectedFilter = "None"; // Set initial selection to "None"
-            //RecipeDetailsVisibility = Visibility.Collapsed;
         }
 
         public ObservableCollection<string> FilterOptions { get; }
+        public ObservableCollection<RecipeClass> FilteredRecipes
+        {
+            get => filteredRecipes;
+            set
+            {
+                filteredRecipes = value;
+                OnPropertyChanged(nameof(FilteredRecipes));
+            }
+        }
 
         public string SelectedFilter
         {
@@ -41,16 +45,6 @@ namespace WpfApp_Part3_POE.ViewModels
             {
                 selectedFilter = value;
                 OnPropertyChanged(nameof(SelectedFilter));
-            }
-        }
-
-        public ObservableCollection<RecipeClass> FilteredRecipes
-        {
-            get => filteredRecipes;
-            set
-            {
-                filteredRecipes = value;
-                OnPropertyChanged(nameof(FilteredRecipes));
             }
         }
 
@@ -64,44 +58,13 @@ namespace WpfApp_Part3_POE.ViewModels
             }
         }
 
-        public string RecipeDetails
-        {
-            get => recipeDetails;
-            set
-            {
-                recipeDetails = value;
-                OnPropertyChanged(nameof(RecipeDetails));
-            }
-        }
-
-        //public Visibility RecipeDetailsVisibility
-        //{
-        //    get => recipeDetailsVisibility;
-        //    set
-        //    {
-        //        recipeDetailsVisibility = value;
-        //        OnPropertyChanged(nameof(RecipeDetailsVisibility));
-        //    }
-        //}
-
-        public string FilterValue
-        {
-            get => filterName;
-            set
-            {
-                filterName = value;
-                OnPropertyChanged(nameof(FilterValue));
-            }
-        }
-
         public ICommand ConfirmFilterCommand => new RelayCommand(ConfirmFilter);
-        public ICommand DisplayRecipeCommand => new RelayCommand(DisplayRecipe);
+        public ICommand DeleteRecipeCommand => new RelayCommand(DeleteRecipe);
 
         private void ConfirmFilter(object parameter)
         {
             string filterValue = string.Empty;
             SelectedRecipe = null;
-            RecipeDetails = string.Empty;
 
             switch (SelectedFilter)
             {
@@ -114,9 +77,9 @@ namespace WpfApp_Part3_POE.ViewModels
                     if (!string.IsNullOrEmpty(filterValue))
                     {
                         RecipeManagerClass filteredList = new RecipeManagerClass();
-                        foreach(RecipeClass recipe in _recipeManager.recipeList)
+                        foreach (RecipeClass recipe in _recipeManager.recipeList)
                         {
-                            foreach(IngredientsClass ingredient in recipe.ingredientList)
+                            foreach (IngredientsClass ingredient in recipe.ingredientList)
                             {
                                 if (filterValue.Equals(ingredient.ingredientName, StringComparison.OrdinalIgnoreCase))
                                 {
@@ -125,13 +88,13 @@ namespace WpfApp_Part3_POE.ViewModels
                                 }
                             }
 
-                            if(ingredientFound)
+                            if (ingredientFound)
                             {
                                 filteredList.addRecipe(recipe);
                                 ingredientFound = false;
                             }
                         }
-                        if(filteredList.recipeList.Count == 0)
+                        if (filteredList.recipeList.Count == 0)
                         {
                             MessageBox.Show($"No recipes found for ingredient: {filterValue}");
                             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
@@ -169,7 +132,7 @@ namespace WpfApp_Part3_POE.ViewModels
                                 foodGroupFound = false;
                             }
                         }
-                        if(filteredList.recipeList.Count == 0)
+                        if (filteredList.recipeList.Count == 0)
                         {
                             MessageBox.Show($"No recipes found for food group: {filterValue}");
                             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
@@ -196,7 +159,7 @@ namespace WpfApp_Part3_POE.ViewModels
                                 filteredList.addRecipe(recipe);
                             }
                         }
-                        if(filteredList.recipeList.Count == 0)
+                        if (filteredList.recipeList.Count == 0)
                         {
                             MessageBox.Show($"No recipes found for max calories: {filterValue}");
                             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
@@ -217,31 +180,33 @@ namespace WpfApp_Part3_POE.ViewModels
                     FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
                     break;
             }
+
+        }
+
+        private void DeleteRecipe(object parameter)
+        {
+            if (SelectedRecipe != null)
+            {
+                // Prompt the user for confirmation before deleting
+                MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete the recipe '{SelectedRecipe.recipeName}'?", "Delete Recipe", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    _recipeManager.recipeList.Remove(SelectedRecipe);
+                    MessageBox.Show("Recipe deleted successfully!");
+                    // Refresh the filtered recipes list
+                    FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a recipe to delete.");
+            }
         }
 
         private string PromptUserForInput(string message)
         {
             return Interaction.InputBox(message, "Filter Input", "");
-        }
-
-        private void DisplayRecipe(object parameter)
-        {
-            if (SelectedRecipe != null)
-            {
-                RecipeDetails = SelectedRecipe.displayRecipeDetails(SelectedRecipe);
-                //RecipeDetailsVisibility = Visibility.Visible;
-                //OnPropertyChanged(nameof(RecipeDetailsVisibility));
-            }
-        }
-
-        public void RefreshRecipeList()
-        {
-            FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
-        }
-
-        public void ClearDisplayedRecipe()
-        {
-            RecipeDetails = string.Empty;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -250,6 +215,10 @@ namespace WpfApp_Part3_POE.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void RefreshRecipeList()
+        {
+            FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
+        }
     }
 }
-            

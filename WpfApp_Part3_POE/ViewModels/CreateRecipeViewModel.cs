@@ -17,8 +17,8 @@ namespace WpfApp_Part3_POE.ViewModels
     public class CreateRecipeViewModel : INotifyPropertyChanged
     {
         private string recipeName;
-        private int numberOfIngredients;
-        private int numberOfSteps;
+        private int? numberOfIngredients;
+        private int? numberOfSteps;
         private int currentIngredientIndex;
         private int currentStepIndex;
         private bool isRecipeNameEnabled;
@@ -42,6 +42,8 @@ namespace WpfApp_Part3_POE.ViewModels
             InputPanelVisibility = Visibility.Collapsed;
             ingredientInputs = new ObservableCollection<UIElement>();
             stepInputs = new ObservableCollection<UIElement>();
+            numberOfIngredients = null;
+            numberOfSteps = null;
             currentIngredientIndex = 0;
             currentStepIndex = 0;
             isRecipeNameEnabled = true;
@@ -59,7 +61,7 @@ namespace WpfApp_Part3_POE.ViewModels
             }
         }
 
-        public int NumberOfIngredients
+        public int? NumberOfIngredients
         {
             get => numberOfIngredients;
             set
@@ -69,7 +71,7 @@ namespace WpfApp_Part3_POE.ViewModels
             }
         }
 
-        public int NumberOfSteps
+        public int? NumberOfSteps
         {
             get => numberOfSteps;
             set
@@ -146,13 +148,13 @@ namespace WpfApp_Part3_POE.ViewModels
 
         private void ConfirmRecipeDetails(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(RecipeName))
+            if (!currentRecipe.validString(RecipeName))
             {
                 MessageBox.Show("Please enter a valid recipe name.");
                 return;
             }
 
-            if (NumberOfIngredients <= 0)
+            if (!NumberOfIngredients.HasValue || NumberOfIngredients.Value <=0)
             {
                 MessageBox.Show("Please enter a valid number of ingredients.");
                 return;
@@ -238,6 +240,38 @@ namespace WpfApp_Part3_POE.ViewModels
             //var currentPanel = IngredientInputs[currentIngredientIndex] as StackPanel;
             if (currentPanel != null)
             {
+
+                string inputName = (currentPanel.Children[1] as TextBox)?.Text;
+                string inputQuantity = (currentPanel.Children[3] as TextBox)?.Text;
+                string inputCalories = (currentPanel.Children[9] as TextBox)?.Text;
+                string calorieFoodGroupCheck = (currentPanel.Children[7] as ComboBox)?.SelectedItem.ToString();
+
+                if (!currentRecipe.validString(inputName))
+                {
+                    MessageBox.Show("Please enter a valid ingredient name with no digits");
+                    return;
+                }
+                if (!currentRecipe.validDouble(inputQuantity))
+                {
+                    MessageBox.Show("Please enter a valid ingredient quantity above 0");
+                    return;
+                }
+                if (!currentRecipe.validCalorieDouble(inputCalories))
+                {
+                    MessageBox.Show("Please enter a valid calorie count");
+                    return;
+                }
+                else if (inputCalories == "0" && calorieFoodGroupCheck != "Water")
+                {
+                    MessageBox.Show("Please enter a valid calorie count for selected food group \n(Only water can have 0 calories)");
+                    return;
+                }
+                else if (inputCalories != "0" && calorieFoodGroupCheck == "Water")
+                {
+                    MessageBox.Show("Please enter a valid calorie count for selected food group \n(Water can only have 0 calories)");
+                    return;
+                }
+
                 var ingredient = new IngredientsClass
                 {
                     ingredientName = (currentPanel.Children[1] as TextBox)?.Text,
@@ -297,26 +331,11 @@ namespace WpfApp_Part3_POE.ViewModels
             IngredientInputs.Add(button);
 
             InputPanelVisibility = Visibility.Visible;
-            //IngredientInputs.Clear();
-
-            //var label = new Label { Content = "Enter Number of Steps:", FontSize = 16, HorizontalAlignment = HorizontalAlignment.Center };
-            //var textBox = new TextBox { Text = "{Binding NumberOfSteps, UpdateSourceTrigger=PropertyChanged}", Width = 50, Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
-            //var button = new Button { Content = "Confirm Steps", Command = ConfirmStepsCommand, Width = 150, Margin = new Thickness(0, 20, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
-
-            ////StepInputs.Add(label);
-            ////StepInputs.Add(textBox);
-            ////StepInputs.Add(button);
-
-            //IngredientInputs.Add(label);
-            //IngredientInputs.Add(textBox);
-            //IngredientInputs.Add(button);
-
-            //InputPanelVisibility = Visibility.Visible;
         }
 
         private void ConfirmSteps(object parameter)
         {
-            if (NumberOfSteps <= 0)
+            if (!NumberOfSteps.HasValue || NumberOfSteps.Value <= 0)
             {
                 MessageBox.Show("Please enter a valid number of steps.");
                 return;
@@ -327,9 +346,6 @@ namespace WpfApp_Part3_POE.ViewModels
 
             // Clear previous input fields
             IngredientInputs.Clear();
-
-            //// Clear previous input fields
-            //StepInputs.Clear();
 
             AddStepInput();
         }
@@ -375,7 +391,17 @@ namespace WpfApp_Part3_POE.ViewModels
 
             if (currentPanel != null)
             {
-                var stepDescription = (currentPanel.Children[1] as TextBox)?.Text;
+                var stepTextBox = currentPanel.Children[1] as TextBox;
+                var stepDescription = stepTextBox?.Text;
+
+                //var stepDescription = (currentPanel.Children[1] as TextBox)?.Text;
+
+                if (string.IsNullOrWhiteSpace(stepDescription))
+                {
+                    MessageBox.Show("Please enter a valid step description that is not empty.");
+                    stepTextBox.Text = string.Empty;
+                    return;
+                }
 
                 currentRecipe.stepList.Add(stepDescription);
                 currentStepIndex++;
@@ -432,17 +458,35 @@ namespace WpfApp_Part3_POE.ViewModels
             // Notify that the recipe has been submitted
             RecipeSubmitted?.Invoke(this, EventArgs.Empty);
 
-            // Reset the fields
+            ResetCreateRecipeViewModel();
+
+            //// Reset the fields
+            //RecipeName = string.Empty;
+            //NumberOfIngredients = 0;
+            //NumberOfSteps = 0;
+            //IsRecipeNameEnabled = true;
+            //IsNumberOfIngredientsEnabled = true;
+            //IsConfirmButtonEnabled = true;
+            //IngredientInputs.Clear();
+            //StepInputs.Clear();
+            //InputPanelVisibility = Visibility.Collapsed;
+            ////StepPanelVisibility = Visibility.Collapsed;
+        }
+
+        private void ResetCreateRecipeViewModel()
+        {
+            currentRecipe = new RecipeClass();
             RecipeName = string.Empty;
-            NumberOfIngredients = 0;
-            NumberOfSteps = 0;
+            NumberOfIngredients = null;
+            NumberOfSteps = null;
             IsRecipeNameEnabled = true;
             IsNumberOfIngredientsEnabled = true;
             IsConfirmButtonEnabled = true;
             IngredientInputs.Clear();
             StepInputs.Clear();
             InputPanelVisibility = Visibility.Collapsed;
-            //StepPanelVisibility = Visibility.Collapsed;
+            currentIngredientIndex = 0;
+            currentStepIndex = 0;
         }
 
 

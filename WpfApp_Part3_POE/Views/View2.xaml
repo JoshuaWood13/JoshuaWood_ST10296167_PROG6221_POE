@@ -29,7 +29,7 @@
 
         <!-- Right side TextBlock -->
         <TextBox Grid.Column="1" x:Name="RecipeDetailsTextBox" Margin="20" Background="AliceBlue" 
-                 Text="{Binding RecipeDetails}" Visibility="{Binding RecipeDetailsVisibility}" 
+                 Text="{Binding RecipeDetails}"  
                  IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
     </Grid>
 </UserControl>
