@@ -110,7 +110,8 @@ namespace WpfApp_Part3_POE.ViewModels
                     }
                     break;
                 case "Food Group":
-                    filterValue = PromptUserForInput("Please enter the food group to filter recipes by:");
+                    filterValue = PromptUserForFoodGroup();
+                    //filterValue = PromptUserForInput("Please enter the food group to filter recipes by:");
                     bool foodGroupFound = false;
                     if (!string.IsNullOrEmpty(filterValue))
                     {
@@ -181,6 +182,47 @@ namespace WpfApp_Part3_POE.ViewModels
                     break;
             }
 
+        }
+
+        private string PromptUserForFoodGroup()
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox(
+                "Select a food group by entering the corresponding number:\n" +
+                "1) Starchy foods\n" +
+                "2) Vegetables and fruits\n" +
+                "3) Dry beans, peas, lentils and soya\n" +
+                "4) Chicken, fish, meat and eggs\n" +
+                "5) Milk and dairy\n" +
+                "6) Fats and oil\n" +
+                "7) Water",
+                "Food Group Selection",
+                "");
+
+            return SelectedFoodGroup(input);
+        }
+
+        private string SelectedFoodGroup(string input)
+        {
+            switch (input)
+            {
+                case "1":
+                    return "Starchy foods";
+                case "2":
+                    return "Vegetables and fruits";
+                case "3":
+                    return "Dry beans, peas, lentils and soya";
+                case "4":
+                    return "Chicken, fish, meat and eggs";
+                case "5":
+                    return "Milk and dairy";
+                case "6":
+                    return "Fats and oil";
+                case "7":
+                    return "Water";
+                default:
+                    MessageBox.Show("Invalid selection. Please enter a number between 1 and 7.");
+                    return null;
+            }
         }
 
         private void DeleteRecipe(object parameter)
