@@ -76,17 +76,17 @@
     <Compile Include="Views\ResetRecipeView.xaml.cs">
       <DependentUpon>ResetRecipeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\View1.xaml.cs">
-      <DependentUpon>View1.xaml</DependentUpon>
+    <Compile Include="Views\CreateRecipeView.xaml.cs">
+      <DependentUpon>CreateRecipeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\View2.xaml.cs">
-      <DependentUpon>View2.xaml</DependentUpon>
+    <Compile Include="Views\DisplayRecipeView.xaml.cs">
+      <DependentUpon>DisplayRecipeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\View3.xaml.cs">
-      <DependentUpon>View3.xaml</DependentUpon>
+    <Compile Include="Views\ScaleRecipeView.xaml.cs">
+      <DependentUpon>ScaleRecipeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\View4.xaml.cs">
-      <DependentUpon>View4.xaml</DependentUpon>
+    <Compile Include="Views\DeleteRecipeView.xaml.cs">
+      <DependentUpon>DeleteRecipeView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -104,19 +104,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\View1.xaml">
+    <Page Include="Views\CreateRecipeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\View2.xaml">
+    <Page Include="Views\DisplayRecipeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\View3.xaml">
+    <Page Include="Views\ScaleRecipeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\View4.xaml">
+    <Page Include="Views\DeleteRecipeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

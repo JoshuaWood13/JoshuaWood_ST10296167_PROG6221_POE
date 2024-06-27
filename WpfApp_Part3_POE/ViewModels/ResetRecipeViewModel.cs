@@ -275,6 +275,16 @@ namespace WpfApp_Part3_POE.ViewModels
             }
         }
 
+        public void ClearSelections()
+        {
+            SelectedFilter = "None";
+            SelectedRecipe = null;
+           /* SelectedScalingFactor = null;*/ // Clear scaling factor selection if applicable
+            //OnPropertyChanged(nameof(SelectedFilter));
+            //OnPropertyChanged(nameof(SelectedRecipe));
+            //OnPropertyChanged(nameof(SelectedScalingFactor));
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)

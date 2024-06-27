@@ -245,6 +245,16 @@ namespace WpfApp_Part3_POE.ViewModels
             }
         }
 
+        public void ClearSelections()
+        {
+            SelectedFilter = "None";
+            SelectedRecipe = null;
+            // Clear scaling factor selection if applicable
+            //OnPropertyChanged(nameof(SelectedFilter));
+            //OnPropertyChanged(nameof(SelectedRecipe));
+            //OnPropertyChanged(nameof(SelectedScalingFactor));
+        }
+
         private string PromptUserForInput(string message)
         {
             return Interaction.InputBox(message, "Filter Input", "");

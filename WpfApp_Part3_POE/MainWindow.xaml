@@ -13,19 +13,19 @@
     <Grid>
         <TabControl Name="MainTabControl" >
             <TabItem Header="Create Recipe">
-                <local:View1 DataContext="{Binding CreateRecipeViewModel}" />
+                <local:CreateRecipeView DataContext="{Binding CreateRecipeViewModel}" />
             </TabItem>
             <TabItem Header="Display Recipe">
-                <local:View2 DataContext="{Binding DisplayRecipeViewModel}" />
+                <local:DisplayRecipeView DataContext="{Binding DisplayRecipeViewModel}" />
             </TabItem>
             <TabItem Header="Scale Recipe">
-                <local:View3 DataContext="{Binding ScaleRecipeViewModel}"/>
+                <local:ScaleRecipeView DataContext="{Binding ScaleRecipeViewModel}"/>
             </TabItem>
             <TabItem Header="Reset Recipe">
                 <local:ResetRecipeView DataContext="{Binding ResetRecipeViewModel}"/>
             </TabItem>
             <TabItem Header="Delete Recipe">
-                <local:View4 DataContext="{Binding DeleteRecipeViewModel}"/>
+                <local:DeleteRecipeView DataContext="{Binding DeleteRecipeViewModel}"/>
             </TabItem>
         </TabControl>
     </Grid>

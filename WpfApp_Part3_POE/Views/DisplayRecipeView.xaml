@@ -1,17 +1,21 @@
-﻿<UserControl x:Class="WpfApp_Part3_POE.Views.View3"
+﻿<UserControl x:Class="WpfApp_Part3_POE.Views.DisplayRecipeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp_Part3_POE.Views"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="BlanchedAlmond">
-        <StackPanel Margin="20" Background="BlanchedAlmond" HorizontalAlignment="Center" Width="300">
-            <Label Content="Scale Recipe" FontSize="24" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- Left side StackPanel for inputs and buttons -->
+        <StackPanel Grid.Column="0" Margin="20" Background="BlanchedAlmond" VerticalAlignment="Stretch">
+            <Label Content="Display Recipe" FontSize="24" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
             <Label Content="Select Filter:" FontSize="16" HorizontalAlignment="Center" Margin="0,5,0,0"/>
             <ComboBox x:Name="FilterComboBox" Width="200" Margin="0,5,0,0" HorizontalAlignment="Center"
                       ItemsSource="{Binding FilterOptions}" SelectedItem="{Binding SelectedFilter}"/>
@@ -20,11 +24,12 @@
             <Label Content="Select Recipe:" FontSize="16" HorizontalAlignment="Center" Margin="0,5,0,0"/>
             <ComboBox x:Name="RecipeComboBox" Width="200" Margin="0,5,0,0" HorizontalAlignment="Center"
                       ItemsSource="{Binding FilteredRecipes}" DisplayMemberPath="recipeName" SelectedItem="{Binding SelectedRecipe}"/>
-
-            <Label Content="Scaling Factor:" FontSize="16" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-            <ComboBox x:Name="ScalingFactorComboBox" Width="100" Margin="0,5,0,0" HorizontalAlignment="Center"
-                      ItemsSource="{Binding ScalingFactors}" SelectedItem="{Binding SelectedScalingFactor}"/>
-            <Button Content="Scale Recipe" Command="{Binding ScaleRecipeCommand}" Width="150" Height="40" Margin="0,25,0,0" HorizontalAlignment="Center"/>
+            <Button Content="Display Recipe" Command="{Binding DisplayRecipeCommand}" Width="150" Height="40" Margin="0,15,0,0" HorizontalAlignment="Center"/>
         </StackPanel>
+
+        <!-- Right side TextBlock -->
+        <TextBox Grid.Column="1" x:Name="RecipeDetailsTextBox" Margin="20" Background="AliceBlue" 
+                 Text="{Binding RecipeDetails}"  
+                 IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
     </Grid>
 </UserControl>
