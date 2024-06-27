@@ -21,6 +21,9 @@
             <TabItem Header="Scale Recipe">
                 <local:View3 DataContext="{Binding ScaleRecipeViewModel}"/>
             </TabItem>
+            <TabItem Header="Reset Recipe">
+                <local:ResetRecipeView DataContext="{Binding ResetRecipeViewModel}"/>
+            </TabItem>
             <TabItem Header="Delete Recipe">
                 <local:View4 DataContext="{Binding DeleteRecipeViewModel}"/>
             </TabItem>

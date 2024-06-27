@@ -111,7 +111,6 @@ namespace WpfApp_Part3_POE.ViewModels
                     break;
                 case "Food Group":
                     filterValue = PromptUserForFoodGroup();
-                    //filterValue = PromptUserForInput("Please enter the food group to filter recipes by:");
                     bool foodGroupFound = false;
                     if (!string.IsNullOrEmpty(filterValue))
                     {

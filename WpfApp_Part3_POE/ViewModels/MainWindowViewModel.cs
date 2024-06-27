@@ -12,6 +12,7 @@ namespace WpfApp_Part3_POE.ViewModels
         public CreateRecipeViewModel CreateRecipeViewModel { get; private set; }
         public DisplayRecipeViewModel DisplayRecipeViewModel { get; private set; }
         public ScaleRecipeViewModel ScaleRecipeViewModel { get; private set; }
+        public ResetRecipeViewModel ResetRecipeViewModel { get; private set; }
         public DeleteRecipeViewModel DeleteRecipeViewModel { get; private set; }
 
         private RecipeManagerClass recipeManager;
@@ -31,6 +32,7 @@ namespace WpfApp_Part3_POE.ViewModels
             CreateRecipeViewModel = new CreateRecipeViewModel(recipeManager);
             DisplayRecipeViewModel = new DisplayRecipeViewModel(recipeManager);
             ScaleRecipeViewModel = new ScaleRecipeViewModel(recipeManager);
+            ResetRecipeViewModel = new ResetRecipeViewModel(recipeManager);
             DeleteRecipeViewModel = new DeleteRecipeViewModel(recipeManager);
 
             CreateRecipeViewModel.RecipeSubmitted += CreateRecipeViewModel_RecipeSubmitted;
@@ -41,6 +43,7 @@ namespace WpfApp_Part3_POE.ViewModels
             ResetCreateRecipeViewModel();
             DisplayRecipeViewModel.RefreshRecipeList();
             ScaleRecipeViewModel.RefreshRecipeList();
+            ResetRecipeViewModel.RefreshRecipeList();
             DeleteRecipeViewModel.RefreshRecipeList();
         }
 

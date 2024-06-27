@@ -40,48 +40,48 @@ namespace WpfApp_Part3_POE.Classes
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method sorts the recipe List alphabetically by recipe name and then displays the list of recipes and gets user input to select
         //a recipe from the list. This recipe is then returned
-        public RecipeClass displayOrderedRecipes(string prompt)
-        {
-            if (recipeList == null || recipeList.Count == 0)
-            {
-                return null;
-            }
+        //public RecipeClass displayOrderedRecipes(string prompt)
+        //{
+        //    if (recipeList == null || recipeList.Count == 0)
+        //    {
+        //        return null;
+        //    }
 
-            recipeList = recipeList.OrderBy(r => r.recipeName).ToList(); // (IronPdf,2024).
-            int count = 1;
-            Console.WriteLine();
-            Console.WriteLine("################################");
-            foreach (RecipeClass recipe in recipeList)
-            {
-                Console.WriteLine($"{count}. {recipe.recipeName}");
-                count++;
-            }
-            Console.WriteLine("################################");
-            Console.WriteLine();
+        //    recipeList = recipeList.OrderBy(r => r.recipeName).ToList(); // (IronPdf,2024).
+        //    int count = 1;
+        //    Console.WriteLine();
+        //    Console.WriteLine("################################");
+        //    foreach (RecipeClass recipe in recipeList)
+        //    {
+        //        Console.WriteLine($"{count}. {recipe.recipeName}");
+        //        count++;
+        //    }
+        //    Console.WriteLine("################################");
+        //    Console.WriteLine();
 
-            while (true)
-            {
-                Console.Write($"Select a recipe to {prompt}: ");
-                if (int.TryParse(Console.ReadLine(), out int choice))
-                {
-                    if (choice >= 1 && choice <= recipeList.Count)
-                    {
-                        return recipeList[choice - 1];
-                    }
-                    else
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("Invalid recipe number. Please select a valid number.");
-                        Console.WriteLine();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Please enter a valid number.");
-                    Console.WriteLine();
-                }
-            }
-        }
+        //    while (true)
+        //    {
+        //        Console.Write($"Select a recipe to {prompt}: ");
+        //        if (int.TryParse(Console.ReadLine(), out int choice))
+        //        {
+        //            if (choice >= 1 && choice <= recipeList.Count)
+        //            {
+        //                return recipeList[choice - 1];
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine();
+        //                Console.WriteLine("Invalid recipe number. Please select a valid number.");
+        //                Console.WriteLine();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Please enter a valid number.");
+        //            Console.WriteLine();
+        //        }
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
     }
 }

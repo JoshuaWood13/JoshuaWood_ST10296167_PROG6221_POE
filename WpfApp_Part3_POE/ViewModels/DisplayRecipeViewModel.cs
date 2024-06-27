@@ -21,7 +21,6 @@ namespace WpfApp_Part3_POE.ViewModels
         private string selectedFilter;
         private string filterName;
         private string recipeDetails;
-        //private Visibility recipeDetailsVisibility;
 
         public DisplayRecipeViewModel(RecipeManagerClass recipeManager)
         {
@@ -29,7 +28,6 @@ namespace WpfApp_Part3_POE.ViewModels
             FilterOptions = new ObservableCollection<string> { "None", "Ingredient", "Food Group", "Max Calories" };
             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
             SelectedFilter = "None"; // Set initial selection to "None"
-            //RecipeDetailsVisibility = Visibility.Collapsed;
         }
 
         public ObservableCollection<string> FilterOptions { get; }
@@ -73,16 +71,6 @@ namespace WpfApp_Part3_POE.ViewModels
                 OnPropertyChanged(nameof(RecipeDetails));
             }
         }
-
-        //public Visibility RecipeDetailsVisibility
-        //{
-        //    get => recipeDetailsVisibility;
-        //    set
-        //    {
-        //        recipeDetailsVisibility = value;
-        //        OnPropertyChanged(nameof(RecipeDetailsVisibility));
-        //    }
-        //}
 
         public string FilterValue
         {
@@ -148,7 +136,6 @@ namespace WpfApp_Part3_POE.ViewModels
                     break;
                 case "Food Group":
                     filterValue = PromptUserForFoodGroup();
-                    //filterValue = PromptUserForInput("Please enter the food group to filter recipes by:");
                     bool foodGroupFound = false;
                     if (!string.IsNullOrEmpty(filterValue))
                     {
@@ -270,8 +257,6 @@ namespace WpfApp_Part3_POE.ViewModels
             if (SelectedRecipe != null)
             {
                 RecipeDetails = SelectedRecipe.displayRecipeDetails(SelectedRecipe);
-                //RecipeDetailsVisibility = Visibility.Visible;
-                //OnPropertyChanged(nameof(RecipeDetailsVisibility));
             }
         }
 

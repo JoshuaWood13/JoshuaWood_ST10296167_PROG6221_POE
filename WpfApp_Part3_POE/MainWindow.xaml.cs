@@ -28,7 +28,8 @@ namespace WpfApp_Part3_POE
         public MainWindow()
         {
             InitializeComponent();
-
+            // Set the window to fullscreen mode
+            this.WindowState = WindowState.Maximized;
             // Set the DataContext to the MainWindowViewModel
             //var viewModel = new MainWindowViewModel();
             viewModel = new MainWindowViewModel();
@@ -75,6 +76,10 @@ namespace WpfApp_Part3_POE
                 viewModel.ScaleRecipeViewModel.RefreshRecipeList();
             }
             else if(MainTabControl.SelectedIndex == 3) //Delete recipe
+            {
+                viewModel.ResetRecipeViewModel.RefreshRecipeList();
+            }
+            else if (MainTabControl.SelectedIndex == 4) //Delete recipe
             {
                 viewModel.DeleteRecipeViewModel.RefreshRecipeList();
             }

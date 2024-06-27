@@ -33,12 +33,11 @@ namespace WpfApp_Part3_POE.ViewModels
         {
             this.recipeManager = recipeManager;
             currentRecipe = new RecipeClass();
-            //SaveCommand = new RelayCommand(SaveRecipe);
             ConfirmRecipeDetailsCommand = new RelayCommand(ConfirmRecipeDetails);
             AddIngredientCommand = new RelayCommand(AddIngredient);
             ConfirmStepsCommand = new RelayCommand(ConfirmSteps);
             AddStepCommand = new RelayCommand(AddStep);
-            SubmitRecipeCommand = new RelayCommand(SubmitRecipe); // Add this line
+            SubmitRecipeCommand = new RelayCommand(SubmitRecipe);
             InputPanelVisibility = Visibility.Collapsed;
             ingredientInputs = new ObservableCollection<UIElement>();
             stepInputs = new ObservableCollection<UIElement>();
@@ -236,8 +235,6 @@ namespace WpfApp_Part3_POE.ViewModels
             // Get the current input values
             var currentPanel = IngredientInputs[0] as StackPanel; // Always access the first item since we clear after adding
 
-            //// Get the current input values
-            //var currentPanel = IngredientInputs[currentIngredientIndex] as StackPanel;
             if (currentPanel != null)
             {
 
@@ -291,7 +288,7 @@ namespace WpfApp_Part3_POE.ViewModels
                 if (currentIngredientIndex < NumberOfIngredients)
                 {
                     IngredientInputs.Clear();
-                    StepInputs.Clear(); ///!!!!!
+                    StepInputs.Clear(); 
                     AddIngredientInput();
                 }
                 else
@@ -372,7 +369,6 @@ namespace WpfApp_Part3_POE.ViewModels
 
                 IngredientInputs.Add(stackPanel); // Add to IngredientInputs
                 InputPanelVisibility = Visibility.Visible; // Ensure the InputPanel is visible
-                //StepInputs.Add(stackPanel);
             }
         }
 
@@ -385,16 +381,12 @@ namespace WpfApp_Part3_POE.ViewModels
             }
 
             // Get the current input values
-            //var currentPanel = StepInputs[0] as StackPanel; // Always access the first item since we clear after adding
-
             var currentPanel = IngredientInputs[0] as StackPanel; // Always access the first item since we clear after adding
 
             if (currentPanel != null)
             {
                 var stepTextBox = currentPanel.Children[1] as TextBox;
                 var stepDescription = stepTextBox?.Text;
-
-                //var stepDescription = (currentPanel.Children[1] as TextBox)?.Text;
 
                 if (string.IsNullOrWhiteSpace(stepDescription))
                 {
@@ -410,9 +402,6 @@ namespace WpfApp_Part3_POE.ViewModels
                 {
                     IngredientInputs.Clear(); // Clear the IngredientInputs
                     AddStepInput();
-
-                    //StepInputs.Clear();
-                    //AddStepInput();
                 }
                 else
                 {
@@ -432,9 +421,6 @@ namespace WpfApp_Part3_POE.ViewModels
                     IngredientInputs.Clear(); // Clear step inputs
                     IngredientInputs.Add(submitButton); // Add submit button to ingredient inputs to ensure visibility
                     InputPanelVisibility = Visibility.Visible;
-                    //IngredientInputs.Add(submitButton); // Add to IngredientInputs
-
-                    //StepInputs.Add(submitButton);
                 }
             }
         }
@@ -453,24 +439,19 @@ namespace WpfApp_Part3_POE.ViewModels
             }
             currentRecipe.recipeCalorieTotal = calories;
             recipeManager.addRecipe(currentRecipe);
-            MessageBox.Show("Recipe has been added successfully!");
+
+            // Delegate for calorie alert
+            RecipeClass.calorieAlert alert = RecipeClass.caloriesExceeded;
+
+            // Get the calorie explanation
+            string calorieExplanation = RecipeClass.DisplayCalorieTotal(calories, alert);
+
+            MessageBox.Show($"Recipe has been added successfully!\n{calorieExplanation}");
 
             // Notify that the recipe has been submitted
             RecipeSubmitted?.Invoke(this, EventArgs.Empty);
 
             ResetCreateRecipeViewModel();
-
-            //// Reset the fields
-            //RecipeName = string.Empty;
-            //NumberOfIngredients = 0;
-            //NumberOfSteps = 0;
-            //IsRecipeNameEnabled = true;
-            //IsNumberOfIngredientsEnabled = true;
-            //IsConfirmButtonEnabled = true;
-            //IngredientInputs.Clear();
-            //StepInputs.Clear();
-            //InputPanelVisibility = Visibility.Collapsed;
-            ////StepPanelVisibility = Visibility.Collapsed;
         }
 
         private void ResetCreateRecipeViewModel()

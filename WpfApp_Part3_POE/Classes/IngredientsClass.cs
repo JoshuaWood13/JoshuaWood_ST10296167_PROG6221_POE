@@ -25,77 +25,77 @@ namespace WpfApp_Part3_POE.Classes
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method prompts the user to choose a measurment unit to assign to an ingredient. They are provided with a menu of choices and are
         //continously prompted until they choose a valid unit
-        public string decideUnit()
-        {
-            //This variable stores a user's choice
-            string choice;
+        //public string decideUnit()
+        //{
+        //    //This variable stores a user's choice
+        //    string choice;
 
-            //Displaying the measurement unit menu
-            Console.WriteLine("Please select the unit of measurement:");
-            Console.WriteLine("1) Teaspoons (tsp) ");
-            Console.WriteLine("2) Tablespoons (tbsp)");
-            Console.WriteLine("3) Cups (C)");
-            Console.WriteLine("4) Grams (g)");
-            Console.WriteLine("5) Kilograms (kg)");
-            Console.WriteLine();
+        //    //Displaying the measurement unit menu
+        //    Console.WriteLine("Please select the unit of measurement:");
+        //    Console.WriteLine("1) Teaspoons (tsp) ");
+        //    Console.WriteLine("2) Tablespoons (tbsp)");
+        //    Console.WriteLine("3) Cups (C)");
+        //    Console.WriteLine("4) Grams (g)");
+        //    Console.WriteLine("5) Kilograms (kg)");
+        //    Console.WriteLine();
 
-            //This do while loop prompts the user to enter a valid menu choice and passes the user's input to the validChoice method to determine
-            //when a valid selection has been made 
-            do
-            {
-                Console.Write("Enter choice: ");
-                //Assigns user input to choice variable
-                choice = Console.ReadLine();
+        //    //This do while loop prompts the user to enter a valid menu choice and passes the user's input to the validChoice method to determine
+        //    //when a valid selection has been made 
+        //    do
+        //    {
+        //        Console.Write("Enter choice: ");
+        //        //Assigns user input to choice variable
+        //        choice = Console.ReadLine();
 
-                //If a valid number is not entered the user will be prompted again
-                if (!validChoice(choice, 1, 5))
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Please enter a number between 1 and 5!");
-                    Console.WriteLine();
-                }
-                //User will keep being prompted until they make a valid choice
-            } while (!validChoice(choice, 1, 5));
+        //        //If a valid number is not entered the user will be prompted again
+        //        if (!validChoice(choice, 1, 5))
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine("Please enter a number between 1 and 5!");
+        //            Console.WriteLine();
+        //        }
+        //        //User will keep being prompted until they make a valid choice
+        //    } while (!validChoice(choice, 1, 5));
 
-            return choice;
-        }
+        //    return choice;
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method prompts the user to choose a food group to assign to an ingredient. They are provided with a menu of choices and are
         //continously prompted until they choose a valid unit
-        public string decideFoodGroup()
-        {
-            string choice;
+        //public string decideFoodGroup()
+        //{
+        //    string choice;
 
-            //Displaying the food group menu
-            Console.WriteLine("Please select the Food Group:");
-            Console.WriteLine("1) Starchy foods");
-            Console.WriteLine("2) Vegetables and fruits");
-            Console.WriteLine("3) Dry beans, peas, lentils and soya");
-            Console.WriteLine("4) Chicken, fish, meat and eggs");
-            Console.WriteLine("5) Milk and dairy");
-            Console.WriteLine("6) Fats and oil");
-            Console.WriteLine("7) Water");
-            Console.WriteLine();
+        //    //Displaying the food group menu
+        //    Console.WriteLine("Please select the Food Group:");
+        //    Console.WriteLine("1) Starchy foods");
+        //    Console.WriteLine("2) Vegetables and fruits");
+        //    Console.WriteLine("3) Dry beans, peas, lentils and soya");
+        //    Console.WriteLine("4) Chicken, fish, meat and eggs");
+        //    Console.WriteLine("5) Milk and dairy");
+        //    Console.WriteLine("6) Fats and oil");
+        //    Console.WriteLine("7) Water");
+        //    Console.WriteLine();
 
-            do
-            {
-                Console.Write("Enter choice: ");
-                //Assigns user input to choice variable
-                choice = Console.ReadLine();
+        //    do
+        //    {
+        //        Console.Write("Enter choice: ");
+        //        //Assigns user input to choice variable
+        //        choice = Console.ReadLine();
 
-                //If a valid number is not entered the user will be prompted again
-                if (!validChoice(choice, 1, 7))
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Please enter a number between 1 and 7!");
-                    Console.WriteLine();
-                }
-                //User will keep being prompted until they make a valid choice
-            } while (!validChoice(choice, 1, 7));
+        //        //If a valid number is not entered the user will be prompted again
+        //        if (!validChoice(choice, 1, 7))
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine("Please enter a number between 1 and 7!");
+        //            Console.WriteLine();
+        //        }
+        //        //User will keep being prompted until they make a valid choice
+        //    } while (!validChoice(choice, 1, 7));
 
-            return choice;
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------------//
+        //    return choice;
+        //}
+        ////------------------------------------------------------------------------------------------------------------------------------------------//
         //This method takes a user's valid choice as the input parameter, to assign the correct measurement unit name and value to the ingredientClass object i parameter
         public void assignUnit(IngredientsClass i, string selection)
         {

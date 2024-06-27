@@ -2,46 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using Microsoft.VisualBasic;
 using WpfApp_Part3_POE.Classes;
+using Microsoft.VisualBasic;
 using System.IO;
+using System.Windows;
+
 
 namespace WpfApp_Part3_POE.ViewModels
 {
-    public class ScaleRecipeViewModel : INotifyPropertyChanged
+    public class ResetRecipeViewModel : INotifyPropertyChanged
     {
         private RecipeManagerClass _recipeManager;
         private RecipeClass selectedRecipe;
         private ObservableCollection<RecipeClass> filteredRecipes;
         private string selectedFilter;
-        private double? selectedScalingFactor;
+        private string filterName;
+        private string recipeDetails;
 
-        public ScaleRecipeViewModel(RecipeManagerClass recipeManager)
+        public ResetRecipeViewModel(RecipeManagerClass recipeManager)
         {
             _recipeManager = recipeManager;
             FilterOptions = new ObservableCollection<string> { "None", "Ingredient", "Food Group", "Max Calories" };
             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
-            ScalingFactors = new ObservableCollection<double> { 0.5, 2, 3 };
             SelectedFilter = "None"; // Set initial selection to "None"
         }
 
         public ObservableCollection<string> FilterOptions { get; }
-        public ObservableCollection<RecipeClass> FilteredRecipes
-        {
-            get => filteredRecipes;
-            set
-            {
-                filteredRecipes = value;
-                OnPropertyChanged(nameof(FilteredRecipes));
-            }
-        }
 
-        public ObservableCollection<double> ScalingFactors { get; }
         public string SelectedFilter
         {
             get => selectedFilter;
@@ -49,6 +40,16 @@ namespace WpfApp_Part3_POE.ViewModels
             {
                 selectedFilter = value;
                 OnPropertyChanged(nameof(SelectedFilter));
+            }
+        }
+
+        public ObservableCollection<RecipeClass> FilteredRecipes
+        {
+            get => filteredRecipes;
+            set
+            {
+                filteredRecipes = value;
+                OnPropertyChanged(nameof(FilteredRecipes));
             }
         }
 
@@ -62,18 +63,18 @@ namespace WpfApp_Part3_POE.ViewModels
             }
         }
 
-        public double? SelectedScalingFactor
+        public string RecipeDetails
         {
-            get => selectedScalingFactor;
+            get => recipeDetails;
             set
             {
-                selectedScalingFactor = value;
-                OnPropertyChanged(nameof(SelectedScalingFactor));
+                recipeDetails = value;
+                OnPropertyChanged(nameof(RecipeDetails));
             }
         }
 
         public ICommand ConfirmFilterCommand => new RelayCommand(ConfirmFilter);
-        public ICommand ScaleRecipeCommand => new RelayCommand(ScaleRecipe);
+        public ICommand ResetRecipeCommand => new RelayCommand(ResetRecipe);
 
         private void ConfirmFilter(object parameter)
         {
@@ -243,32 +244,35 @@ namespace WpfApp_Part3_POE.ViewModels
             return Interaction.InputBox(message, "Filter Input", "");
         }
 
-        private void ScaleRecipe(object parameter)
+        private void ResetRecipe(object parameter)
         {
-            if (SelectedRecipe == null)
+            if (SelectedRecipe != null)
             {
-                MessageBox.Show("Please select a recipe to scale.");
-                return;
-            }
+                double calories = 0;
+                foreach (var ingredient in SelectedRecipe.ingredientList)
+                {
+                    ingredient.ingredientQuantity = ingredient.originalQuantity;
+                    ingredient.measurementUnitName = ingredient.originalunitName;
+                    ingredient.ingredientCalories = ingredient.originalCalories;
 
-            if (!SelectedScalingFactor.HasValue)
+                    calories += ingredient.ingredientCalories;
+
+                    if (ingredient.measurementUnitGrams == 0)
+                    {
+                        ingredient.measurementUnitMl = ingredient.originalUnitMl;
+                    }
+                    else
+                    {
+                        ingredient.measurementUnitGrams = ingredient.originalGrams;
+                    }
+                }
+                SelectedRecipe.recipeCalorieTotal = calories;
+                MessageBox.Show("Recipe quantities have been reset to original values!");
+            }
+            else
             {
-                MessageBox.Show("Please select a valid scaling factor.");
-                return;
+                MessageBox.Show("Please select a recipe to reset.");
             }
-
-            foreach(var ingredient in SelectedRecipe.ingredientList)
-            {
-                ingredient.scaleIngredients(ingredient, SelectedScalingFactor.Value);
-            }
-
-            SelectedRecipe.recipeCalorieTotal *= SelectedScalingFactor.Value;
-            MessageBox.Show($"Recipe '{SelectedRecipe.recipeName}' has been scaled by {SelectedScalingFactor}x.");
-        }
-
-        public void RefreshRecipeList()
-        {
-            FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -277,6 +281,10 @@ namespace WpfApp_Part3_POE.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
 
+        public void RefreshRecipeList()
+        {
+            FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
+        }
+    }
 }

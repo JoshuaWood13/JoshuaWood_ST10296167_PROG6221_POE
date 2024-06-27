@@ -15,7 +15,7 @@ namespace WpfApp_Part3_POE.Classes
         public string recipeName { get; set; }
         public double recipeCalorieTotal { get; set; }
         //Declaring delegate for the calorie alert
-        public delegate void calorieAlert(double num);
+        public delegate string calorieAlert(double total);
 
         //Constructor
         public RecipeClass()
@@ -48,79 +48,79 @@ namespace WpfApp_Part3_POE.Classes
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method provides a menu of recipe actions and prompts the user to choose what action they would like to perform.
         //It then returns a valid choice
-        private static string recipeMenu()
-        {
-            //Stores user's choice
-            string choice;
+        //private static string recipeMenu()
+        //{
+        //    //Stores user's choice
+        //    string choice;
 
-            //Displays recipe generator menu
-            borderColour("====== RECIPE GENERATOR MENU ======\n", ConsoleColor.Blue);
-            Console.WriteLine("1) Create a recipe");
-            Console.WriteLine("2) Display recipe");
-            Console.WriteLine("3) Scale recipe");
-            Console.WriteLine("4) Reset recipe");
-            Console.WriteLine("5) Clear recipe");
-            Console.WriteLine("6) Quit");
-            Console.WriteLine();
+        //    //Displays recipe generator menu
+        //    borderColour("====== RECIPE GENERATOR MENU ======\n", ConsoleColor.Blue);
+        //    Console.WriteLine("1) Create a recipe");
+        //    Console.WriteLine("2) Display recipe");
+        //    Console.WriteLine("3) Scale recipe");
+        //    Console.WriteLine("4) Reset recipe");
+        //    Console.WriteLine("5) Clear recipe");
+        //    Console.WriteLine("6) Quit");
+        //    Console.WriteLine();
 
-            //This do while loop prompts the user to choose an action from the menu and runs until the validChoice method returns true, indicating a valid choice 
-            do
-            {
-                Console.Write("Enter choice: ");
-                //Assigns user input to choice variable
-                choice = Console.ReadLine();
+        //    //This do while loop prompts the user to choose an action from the menu and runs until the validChoice method returns true, indicating a valid choice 
+        //    do
+        //    {
+        //        Console.Write("Enter choice: ");
+        //        //Assigns user input to choice variable
+        //        choice = Console.ReadLine();
 
-                //If a user does not enter a valid choice they are reminded of the valid range 
-                if (!validChoice(choice, 1, 6))
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Please enter a number between 1 and 6.");
-                    Console.WriteLine();
-                }
-            } while (!validChoice(choice, 1, 6));
+        //        //If a user does not enter a valid choice they are reminded of the valid range 
+        //        if (!validChoice(choice, 1, 6))
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine("Please enter a number between 1 and 6.");
+        //            Console.WriteLine();
+        //        }
+        //    } while (!validChoice(choice, 1, 6));
 
-            return choice;
-        }
+        //    return choice;
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method calls recipeMenu() to get a valid user choice and then calls the appropriate method to execute based on the user's choice
-        public void buildRecipe(RecipeManagerClass recipeManager)
-        {
-            //This while loop ensures the menu and user prompt will continue to apear after every action until a user decides to quit the application
-            while (true)
-            {
-                //recipeMenu() retuns a valid user input which is assigned to choice variable
-                string choice = recipeMenu();
+        //public void buildRecipe(RecipeManagerClass recipeManager)
+        //{
+        //    //This while loop ensures the menu and user prompt will continue to apear after every action until a user decides to quit the application
+        //    while (true)
+        //    {
+        //        //recipeMenu() retuns a valid user input which is assigned to choice variable
+        //        string choice = recipeMenu();
 
-                //This switch statements uses the user's choice to decide what method to call
-                switch (choice)
-                {
-                    case "1":
-                        //inputRecipeDetails(recipeManager);
-                        break;
+        //        //This switch statements uses the user's choice to decide what method to call
+        //        switch (choice)
+        //        {
+        //            case "1":
+        //                //inputRecipeDetails(recipeManager);
+        //                break;
 
-                    case "2":
-                        displayRecipe(recipeManager);
-                        break;
+        //            case "2":
+        //                displayRecipe(recipeManager);
+        //                break;
 
-                    case "3":
-                        scaleRecipe(recipeManager);
-                        break;
+        //            case "3":
+        //                scaleRecipe(recipeManager);
+        //                break;
 
-                    case "4":
-                        resetValues(recipeManager);
-                        break;
+        //            case "4":
+        //                resetValues(recipeManager);
+        //                break;
 
-                    case "5":
-                        clearRecipe(recipeManager);
-                        break;
+        //            case "5":
+        //                clearRecipe(recipeManager);
+        //                break;
 
-                    case "6":
-                        //Exits the application
-                        Environment.Exit(0);
-                        break;
-                }
-            }
-        }
+        //            case "6":
+        //                //Exits the application
+        //                Environment.Exit(0);
+        //                break;
+        //        }
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method accepts a user's choice and attempts to convert the choice to an int and only returns true if the choice is succesfully
         //converted to an int and that int falls within the range specified by the min and max parameters 
@@ -188,6 +188,51 @@ namespace WpfApp_Part3_POE.Classes
             }
         }
 
+        public static string DisplayCalorieTotal(double total, calorieAlert alert)
+        {
+            StringBuilder message = new StringBuilder();
+            if(total > 300)
+            {
+                message.AppendLine();
+                message.AppendLine(alert(total));
+                //message.AppendLine("Alert: total calories of recipe exceed 300!");
+            }
+            message.AppendLine();
+            message.AppendLine($"Total calories in recipe: {total}");
+            message.AppendLine();
+            message.AppendLine("Explanation:");
+            message.AppendLine();
+            if (total <= 100)
+            {
+                message.AppendLine("This recipe is very low in calories, making it a great option for a light snack or a side dish. " +
+                    "It's ideal for those looking to reduce their caloric intake while still enjoying a flavorful meal.");
+            }
+            else if (total <= 300)
+            {
+                message.AppendLine("This recipe falls into the low-calorie range, perfect for a light meal or a more substantial snack. " +
+                    "It can be part of a balanced diet and is suitable for those managing their weight.");
+            }
+            else if (total <= 500)
+            {
+                message.AppendLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized. " +
+                    "It’s ideal for individuals who need a bit more energy, such as after physical activity.");
+            }
+            else if (total <= 700)
+            {
+                message.AppendLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized. " +
+                    "It’s ideal for individuals who need a bit more energy, such as after physical activity.");
+            }
+            else if (total <= 1000)
+            {
+                message.AppendLine("This recipe is relatively high in calories and works well as a hearty main dish. It’s suitable for those with higher energy needs," +
+                    " such as active individuals or those looking to gain weight in a healthy manner.");
+            }
+            else
+            {
+                message.AppendLine("This recipe is very high in calories, making it a substantial meal that is best suited for special occasions. Be mindful of portion sizes if you’re watching your calorie intake.");
+            }
+            return message.ToString();
+        }
 
 
 
@@ -369,293 +414,293 @@ namespace WpfApp_Part3_POE.Classes
         //}
         //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method displays all stored ingredient and step information for recipe
-        private void displayRecipe(RecipeManagerClass r)
-        {
-            Console.WriteLine();
-            borderColour("---------DISPLAY RECIPE---------", ConsoleColor.DarkMagenta);
-            RecipeClass selected = r.displayOrderedRecipes("display");
+        //private void displayRecipe(RecipeManagerClass r)
+        //{
+        //    Console.WriteLine();
+        //    borderColour("---------DISPLAY RECIPE---------", ConsoleColor.DarkMagenta);
+        //    RecipeClass selected = r.displayOrderedRecipes("display");
 
-            //Checks if recipe exists before attempting to display
-            if (selected != null)
-            {
-                Console.WriteLine();
-                borderColour("---------FULL RECIPE---------", ConsoleColor.Magenta);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Recipe name: {selected.recipeName}");
-                Console.ResetColor();
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"Total calories: {selected.recipeCalorieTotal}");
-                Console.ResetColor();
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Ingredients:");
-                //Count initialized in order to number ingredients
-                int count = 1;
-                //Displays the ingredient information for each ingredientsClass object in the ingredient List 
-                foreach (IngredientsClass i in selected.ingredientList)
-                {
-                    Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
-                    count++;
-                }
-                Console.ResetColor();
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Steps:");
-                //Count is reset in order to number the steps
-                count = 1;
-                //Displays each string element in the step List
-                foreach (string x in selected.stepList)
-                {
-                    Console.WriteLine($"{count}. {x}");
-                    count++;
-                }
-                Console.ResetColor();
-                borderColour("--------------------------------", ConsoleColor.Magenta);
-                Console.WriteLine();
-            }
-            //Displays to the user that no recipe has been created
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("No Recipes Found");
-                Console.WriteLine();
-            }
+        //    //Checks if recipe exists before attempting to display
+        //    if (selected != null)
+        //    {
+        //        Console.WriteLine();
+        //        borderColour("---------FULL RECIPE---------", ConsoleColor.Magenta);
+        //        Console.ForegroundColor = ConsoleColor.Red;
+        //        Console.WriteLine($"Recipe name: {selected.recipeName}");
+        //        Console.ResetColor();
+        //        Console.WriteLine();
+        //        Console.ForegroundColor = ConsoleColor.Cyan;
+        //        Console.WriteLine($"Total calories: {selected.recipeCalorieTotal}");
+        //        Console.ResetColor();
+        //        Console.WriteLine();
+        //        Console.ForegroundColor = ConsoleColor.Green;
+        //        Console.WriteLine("Ingredients:");
+        //        //Count initialized in order to number ingredients
+        //        int count = 1;
+        //        //Displays the ingredient information for each ingredientsClass object in the ingredient List 
+        //        foreach (IngredientsClass i in selected.ingredientList)
+        //        {
+        //            Console.WriteLine($"{count}. {i.ingredientQuantity} {i.measurementUnitName}(s) of {i.ingredientName}");
+        //            count++;
+        //        }
+        //        Console.ResetColor();
+        //        Console.WriteLine();
+        //        Console.ForegroundColor = ConsoleColor.Yellow;
+        //        Console.WriteLine("Steps:");
+        //        //Count is reset in order to number the steps
+        //        count = 1;
+        //        //Displays each string element in the step List
+        //        foreach (string x in selected.stepList)
+        //        {
+        //            Console.WriteLine($"{count}. {x}");
+        //            count++;
+        //        }
+        //        Console.ResetColor();
+        //        borderColour("--------------------------------", ConsoleColor.Magenta);
+        //        Console.WriteLine();
+        //    }
+        //    //Displays to the user that no recipe has been created
+        //    else
+        //    {
+        //        Console.WriteLine();
+        //        Console.WriteLine("No Recipes Found");
+        //        Console.WriteLine();
+        //    }
 
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------------//
+        //}
+        ////------------------------------------------------------------------------------------------------------------------------------------------//
         //This method prompts the user to select a scale factor from a menu, sets the scale factor based on user choice and then passes the scale
         //factor as an argument in order to scale each ingredient 
-        private void scaleRecipe(RecipeManagerClass r)
-        {
-            //Stores the user's choice
-            string choice;
-            //Stores the scale factor
-            double scaleFactor;
+        //private void scaleRecipe(RecipeManagerClass r)
+        //{
+        //    //Stores the user's choice
+        //    string choice;
+        //    //Stores the scale factor
+        //    double scaleFactor;
 
-            Console.WriteLine();
-            borderColour("---------SCALE RECIPE---------", ConsoleColor.Cyan);
-            RecipeClass selected = r.displayOrderedRecipes("scale");
+        //    Console.WriteLine();
+        //    borderColour("---------SCALE RECIPE---------", ConsoleColor.Cyan);
+        //    RecipeClass selected = r.displayOrderedRecipes("scale");
 
-            //Checks if a recipe exists 
-            if (selected != null)
-            {
-                //Displays scaling options
-                Console.WriteLine("1) Half");
-                Console.WriteLine("2) Double");
-                Console.WriteLine("3) Triple");
-                Console.WriteLine();
-                //This do while loop continously prompts the user for a choice until a valid choice is input
-                do
-                {
-                    Console.Write("Enter choice: ");
-                    //Assings user input to choice variable
-                    choice = Console.ReadLine();
-                    Console.WriteLine();
+        //    //Checks if a recipe exists 
+        //    if (selected != null)
+        //    {
+        //        //Displays scaling options
+        //        Console.WriteLine("1) Half");
+        //        Console.WriteLine("2) Double");
+        //        Console.WriteLine("3) Triple");
+        //        Console.WriteLine();
+        //        //This do while loop continously prompts the user for a choice until a valid choice is input
+        //        do
+        //        {
+        //            Console.Write("Enter choice: ");
+        //            //Assings user input to choice variable
+        //            choice = Console.ReadLine();
+        //            Console.WriteLine();
 
-                    //If input is not valid user is asked to enter a valid input
-                    if (!validChoice(choice, 1, 3))
-                    {
-                        Console.WriteLine("Please enter a number between 1 and 3.");
-                        Console.WriteLine();
-                    }
-                } while (!validChoice(choice, 1, 3));
+        //            //If input is not valid user is asked to enter a valid input
+        //            if (!validChoice(choice, 1, 3))
+        //            {
+        //                Console.WriteLine("Please enter a number between 1 and 3.");
+        //                Console.WriteLine();
+        //            }
+        //        } while (!validChoice(choice, 1, 3));
 
-                //Determins what scaling factor value to assign based on user input
-                if (int.Parse(choice) == 1)
-                {
-                    scaleFactor = 0.5;
-                }
-                else if (int.Parse(choice) == 2)
-                {
-                    scaleFactor = 2;
-                }
-                else
-                {
-                    scaleFactor = 3;
-                }
+        //        //Determins what scaling factor value to assign based on user input
+        //        if (int.Parse(choice) == 1)
+        //        {
+        //            scaleFactor = 0.5;
+        //        }
+        //        else if (int.Parse(choice) == 2)
+        //        {
+        //            scaleFactor = 2;
+        //        }
+        //        else
+        //        {
+        //            scaleFactor = 3;
+        //        }
 
-                //Each IngredientsClass object in the ingredient List is scaled based on the chosen scale factor 
-                foreach (IngredientsClass i in selected.ingredientList)
-                {
-                    i.scaleIngredients(i, scaleFactor);
-                }
-            }
-            //Inform the user to create a recipe before scaling
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("Please create a recipe before scaling!");
-                Console.WriteLine();
-            }
-        }
+        //        //Each IngredientsClass object in the ingredient List is scaled based on the chosen scale factor 
+        //        foreach (IngredientsClass i in selected.ingredientList)
+        //        {
+        //            i.scaleIngredients(i, scaleFactor);
+        //        }
+        //    }
+        //    //Inform the user to create a recipe before scaling
+        //    else
+        //    {
+        //        Console.WriteLine();
+        //        Console.WriteLine("Please create a recipe before scaling!");
+        //        Console.WriteLine();
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method resets all IngredientClass object's quantities in the ingredient List to the original values first entered by the user
-        private void resetValues(RecipeManagerClass r)
-        {
-            Console.WriteLine();
-            borderColour("---------RESET RECIPE---------", ConsoleColor.DarkYellow);
-            RecipeClass selected = r.displayOrderedRecipes("reset");
+        //private void resetValues(RecipeManagerClass r)
+        //{
+        //    Console.WriteLine();
+        //    borderColour("---------RESET RECIPE---------", ConsoleColor.DarkYellow);
+        //    RecipeClass selected = r.displayOrderedRecipes("reset");
 
-            //Checks if a recipe exists 
-            if (selected != null)
-            {
-                //Each IngredientsClass object's quantities in the ingredient List are assigned to the saved original values
-                foreach (IngredientsClass i in selected.ingredientList)
-                {
-                    i.ingredientQuantity = i.originalQuantity;
-                    i.measurementUnitName = i.originalunitName;
-                    i.ingredientCalories = i.originalCalories;
-                    //Determines if the ingredient value is stored in ml or grams 
-                    if (i.measurementUnitGrams == 0)
-                    {
-                        i.measurementUnitMl = i.originalUnitMl;
-                    }
-                    else
-                    {
-                        i.measurementUnitGrams = i.originalGrams;
-                    }
-                }
-                //Displays to the user that the recipe quantiies has been reset 
-                Console.WriteLine();
-                Console.WriteLine("Recipe quantities have been reset to original values!");
-                Console.WriteLine();
-            }
-            //Informs the user to create a recipe before resetting quantities 
-            else
-            {
-                Console.WriteLine("No recipe found. Please create a recipe before resetting ingredient quantities!");
-                Console.WriteLine();
-            }
-        }
+        //    //Checks if a recipe exists 
+        //    if (selected != null)
+        //    {
+        //        //Each IngredientsClass object's quantities in the ingredient List are assigned to the saved original values
+        //        foreach (IngredientsClass i in selected.ingredientList)
+        //        {
+        //            i.ingredientQuantity = i.originalQuantity;
+        //            i.measurementUnitName = i.originalunitName;
+        //            i.ingredientCalories = i.originalCalories;
+        //            //Determines if the ingredient value is stored in ml or grams 
+        //            if (i.measurementUnitGrams == 0)
+        //            {
+        //                i.measurementUnitMl = i.originalUnitMl;
+        //            }
+        //            else
+        //            {
+        //                i.measurementUnitGrams = i.originalGrams;
+        //            }
+        //        }
+        //        //Displays to the user that the recipe quantiies has been reset 
+        //        Console.WriteLine();
+        //        Console.WriteLine("Recipe quantities have been reset to original values!");
+        //        Console.WriteLine();
+        //    }
+        //    //Informs the user to create a recipe before resetting quantities 
+        //    else
+        //    {
+        //        Console.WriteLine("No recipe found. Please create a recipe before resetting ingredient quantities!");
+        //        Console.WriteLine();
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method clears all ingredient List and step List values if a user confirms the action
-        private void clearRecipe(RecipeManagerClass r)
-        {
-            Console.WriteLine();
-            borderColour("---------CLEAR RECIPE---------", ConsoleColor.Red);
-            //Console.WriteLine();
-            RecipeClass selected = r.displayOrderedRecipes("clear");
+        //private void clearRecipe(RecipeManagerClass r)
+        //{
+        //    Console.WriteLine();
+        //    borderColour("---------CLEAR RECIPE---------", ConsoleColor.Red);
+        //    //Console.WriteLine();
+        //    RecipeClass selected = r.displayOrderedRecipes("clear");
 
-            if (selected != null)
-            {
-                //Clears values if user confirms 
-                if (confrimPrompt())
-                {
-                    r.removeRecipe(selected);
-                    Console.WriteLine();
-                    Console.WriteLine("Recipe has been cleared!");
-                    Console.WriteLine();
-                }
-                //Does not clear values if user declines
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Recipe will not be cleared!");
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                Console.WriteLine();
-                Console.WriteLine("No Recipe found. Please create a recipe before clearing");
-                Console.WriteLine();
-            }
-        }
+        //    if (selected != null)
+        //    {
+        //        //Clears values if user confirms 
+        //        if (confrimPrompt())
+        //        {
+        //            r.removeRecipe(selected);
+        //            Console.WriteLine();
+        //            Console.WriteLine("Recipe has been cleared!");
+        //            Console.WriteLine();
+        //        }
+        //        //Does not clear values if user declines
+        //        else
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine("Recipe will not be cleared!");
+        //            Console.WriteLine();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine();
+        //        Console.WriteLine("No Recipe found. Please create a recipe before clearing");
+        //        Console.WriteLine();
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method prompts a user to confirm an action and returns a boolean value based on the decision 
-        private static Boolean confrimPrompt()
-        {
-            //Stores user input
-            string input;
-            //Stores users decision 
-            Boolean decision = false;
-            //Flag to control the loop
-            Boolean y = false;
-            //Loops until user makes a valid choice
-            while (y == false)
-            {
-                Console.WriteLine();
-                //Prompts the user to confirm their action
-                Console.Write("Are you sure you would like to clear recipe? (Y/N): ");
-                //Assigns user input to input variable
-                input = Console.ReadLine();
+        //private static Boolean confrimPrompt()
+        //{
+        //    //Stores user input
+        //    string input;
+        //    //Stores users decision 
+        //    Boolean decision = false;
+        //    //Flag to control the loop
+        //    Boolean y = false;
+        //    //Loops until user makes a valid choice
+        //    while (y == false)
+        //    {
+        //        Console.WriteLine();
+        //        //Prompts the user to confirm their action
+        //        Console.Write("Are you sure you would like to clear recipe? (Y/N): ");
+        //        //Assigns user input to input variable
+        //        input = Console.ReadLine();
 
-                //If user confirms action, the method returns true
-                if (input.Equals("y", StringComparison.OrdinalIgnoreCase))
-                {
-                    y = true;
-                    decision = true;
-                    return decision;
-                }
-                //If the user declines the action, the method returns false
-                else if (input.Equals("n", StringComparison.OrdinalIgnoreCase))
-                {
-                    y = true;
-                    decision = false;
-                    return decision;
-                }
-                //If user enters an invalid input they are prompted to enter a valid input 
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Please enter Y or N!");
-                    Console.WriteLine();
-                }
-            }
-            return decision;
-        }
+        //        //If user confirms action, the method returns true
+        //        if (input.Equals("y", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            y = true;
+        //            decision = true;
+        //            return decision;
+        //        }
+        //        //If the user declines the action, the method returns false
+        //        else if (input.Equals("n", StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            y = true;
+        //            decision = false;
+        //            return decision;
+        //        }
+        //        //If user enters an invalid input they are prompted to enter a valid input 
+        //        else
+        //        {
+        //            Console.WriteLine();
+        //            Console.WriteLine("Please enter Y or N!");
+        //            Console.WriteLine();
+        //        }
+        //    }
+        //    return decision;
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method sets the colour of the text for a specific string 
-        private static void borderColour(string border, ConsoleColor c)
-        {
-            //Text colour is assigned based on the passed parameter
-            Console.ForegroundColor = c;  // (tutorialspoint, 2024)
-            //Displays string parameter
-            Console.WriteLine(border);
-            //Resets the colour back to default
-            Console.ResetColor();
-        }
+        //private static void borderColour(string border, ConsoleColor c)
+        //{
+        //    //Text colour is assigned based on the passed parameter
+        //    Console.ForegroundColor = c;  // (tutorialspoint, 2024)
+        //    //Displays string parameter
+        //    Console.WriteLine(border);
+        //    //Resets the colour back to default
+        //    Console.ResetColor();
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method accepts the calorie total as a parameter and then displays the appropraite explanation depending on the amount
-        private static void displayCalorieTotal(double total)
-        {
-            Console.WriteLine();
-            Console.WriteLine($"Total calories in recipe: {total}");
-            Console.WriteLine();
-            Console.WriteLine("Explanation:");
-            Console.WriteLine();
-            if (total <= 100)
-            {
-                Console.WriteLine("This recipe is very low in calories, making it a great option for a light snack or a side dish.");
-                Console.WriteLine("It's ideal for those looking to reduce their caloric intake while still enjoying a flavourful meal.");
-            }
-            else if (total <= 300)
-            {
-                Console.WriteLine("This recipe falls into the low-calorie range, perfect for a light meal or a more substantial snack.");
-                Console.WriteLine("It can be part of a balanced diet and is suitable for those managing their weight.");
-            }
-            else if (total <= 500)
-            {
-                Console.WriteLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized.");
-                Console.WriteLine("It’s ideal for individuals who need a bit more energy, such as after physical activity.");
-            }
-            else if (total <= 700)
-            {
-                Console.WriteLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized.");
-                Console.WriteLine("It’s ideal for individuals who need a bit more energy, such as after physical activity.");
-            }
-            else if (total <= 1000)
-            {
-                Console.WriteLine("This recipe is relatively high in calories and works well as a hearty main dish.");
-                Console.WriteLine("It’s suitable for those with higher energy needs, such as active individuals or those looking to gain weight in a healthy manner.");
-            }
-            else
-            {
-                Console.WriteLine("This recipe is very high in calories, making it a substantial meal that is best suited for special occasions.");
-                Console.WriteLine("Be mindful of portion sizes if you’re watching your calorie intake.");
-            }
-        }
+        //private static void displayCalorieTotal(double total)
+        //{
+        //    Console.WriteLine();
+        //    Console.WriteLine($"Total calories in recipe: {total}");
+        //    Console.WriteLine();
+        //    Console.WriteLine("Explanation:");
+        //    Console.WriteLine();
+        //    if (total <= 100)
+        //    {
+        //        Console.WriteLine("This recipe is very low in calories, making it a great option for a light snack or a side dish.");
+        //        Console.WriteLine("It's ideal for those looking to reduce their caloric intake while still enjoying a flavourful meal.");
+        //    }
+        //    else if (total <= 300)
+        //    {
+        //        Console.WriteLine("This recipe falls into the low-calorie range, perfect for a light meal or a more substantial snack.");
+        //        Console.WriteLine("It can be part of a balanced diet and is suitable for those managing their weight.");
+        //    }
+        //    else if (total <= 500)
+        //    {
+        //        Console.WriteLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized.");
+        //        Console.WriteLine("It’s ideal for individuals who need a bit more energy, such as after physical activity.");
+        //    }
+        //    else if (total <= 700)
+        //    {
+        //        Console.WriteLine("This recipe is moderately high in calories, which makes it suitable for a main meal that will keep you full and energized.");
+        //        Console.WriteLine("It’s ideal for individuals who need a bit more energy, such as after physical activity.");
+        //    }
+        //    else if (total <= 1000)
+        //    {
+        //        Console.WriteLine("This recipe is relatively high in calories and works well as a hearty main dish.");
+        //        Console.WriteLine("It’s suitable for those with higher energy needs, such as active individuals or those looking to gain weight in a healthy manner.");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("This recipe is very high in calories, making it a substantial meal that is best suited for special occasions.");
+        //        Console.WriteLine("Be mindful of portion sizes if you’re watching your calorie intake.");
+        //    }
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method calculates the total calories for a recipe by adding the calories of each ingredient from the recipe together
         public double calculateCalorieTotal(List<IngredientsClass> ingredients)
@@ -671,23 +716,24 @@ namespace WpfApp_Part3_POE.Classes
         }
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method calls the calorie alert delegate and passes the current calorie count to it
-        private static void calorieCheck(double num, calorieAlert alert)
-        {
-            alert(num);
-        }
+        //private static void calorieCheck(calorieAlert alert)
+        //{
+        //    alert();
+        //}
         //------------------------------------------------------------------------------------------------------------------------------------------//
         //This method matches the signature of the delegate and displays a calorie warning if the calories exceed 300
-        private static void caloriesExceeded(double num)
+        public static string caloriesExceeded(double total)
         {
-            if (num > 300)
-            {
-                Console.WriteLine();
-                borderColour("******************************************************", ConsoleColor.Red);
-                borderColour("Total calories of recipe exceed 300!", ConsoleColor.Red);
-                borderColour("This recipe no longer falls into the low-calorie range", ConsoleColor.Red);
-                borderColour("It is therefore more suitable for a main meal ", ConsoleColor.Red);
-                borderColour("******************************************************", ConsoleColor.Red);
-            }
+            return "Alert: total calories of recipe exceed 300!";
+            //if (num > 300)
+            //{
+            //    Console.WriteLine();
+            //    borderColour("******************************************************", ConsoleColor.Red);
+            //    borderColour("Total calories of recipe exceed 300!", ConsoleColor.Red);
+            //    borderColour("This recipe no longer falls into the low-calorie range", ConsoleColor.Red);
+            //    borderColour("It is therefore more suitable for a main meal ", ConsoleColor.Red);
+            //    borderColour("******************************************************", ConsoleColor.Red);
+            //}
         }
     }
 }
