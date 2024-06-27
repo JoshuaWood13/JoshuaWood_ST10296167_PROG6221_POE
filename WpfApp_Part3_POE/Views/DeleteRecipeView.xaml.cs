@@ -16,15 +16,11 @@ using WpfApp_Part3_POE.ViewModels;
 
 namespace WpfApp_Part3_POE.Views
 {
-    /// <summary>
-    /// Interaction logic for View4.xaml
-    /// </summary>
     public partial class DeleteRecipeView : UserControl
     {
         public DeleteRecipeView()
         {
             InitializeComponent();
-            //DataContext = new View4ViewModel();
         }
     }
 }

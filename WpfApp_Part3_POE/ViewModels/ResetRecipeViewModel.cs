@@ -1,4 +1,13 @@
-﻿using System;
+﻿// Name: Joshua Wood
+// Student number: ST10296167
+// Group: 2
+
+// References: 
+// Microsoft Learn. 2009. WPF Apps With The Model-View-ViewModel Design Pattern. Available at: https://learn.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern
+// Microsoft Learn. 2024. Model-View-ViewModel. Available at: https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm
+// IntelliTect. 2024. Master the Basics of MVVM for Building WPF Applications. Available at: https://intellitect.com/blog/getting-started-model-view-viewmodel-mvvm-pattern-using-windows-presentation-framework-wpf/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +23,12 @@ using System.Windows;
 
 namespace WpfApp_Part3_POE.ViewModels
 {
+
+    // In order to develop this WPF application I decided to use the Model-View-ViewModel Pattern using this following references: (Microsoft Learn, 2009), (Microsoft Learn, 2024), (IntelliTect, 2024).
+
     public class ResetRecipeViewModel : INotifyPropertyChanged
     {
+        // Declaring variables
         private RecipeManagerClass _recipeManager;
         private RecipeClass selectedRecipe;
         private ObservableCollection<RecipeClass> filteredRecipes;
@@ -23,14 +36,19 @@ namespace WpfApp_Part3_POE.ViewModels
         private string filterName;
         private string recipeDetails;
 
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // Constructor
         public ResetRecipeViewModel(RecipeManagerClass recipeManager)
         {
             _recipeManager = recipeManager;
             FilterOptions = new ObservableCollection<string> { "None", "Ingredient", "Food Group", "Max Calories" };
             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
-            SelectedFilter = "None"; // Set initial selection to "None"
+            SelectedFilter = "None"; 
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------//
 
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // Collections
         public ObservableCollection<string> FilterOptions { get; }
 
         public string SelectedFilter
@@ -52,7 +70,8 @@ namespace WpfApp_Part3_POE.ViewModels
                 OnPropertyChanged(nameof(FilteredRecipes));
             }
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // Properties
         public RecipeClass SelectedRecipe
         {
             get => selectedRecipe;
@@ -72,10 +91,16 @@ namespace WpfApp_Part3_POE.ViewModels
                 OnPropertyChanged(nameof(RecipeDetails));
             }
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------//
 
+        // Command for confirming filter
         public ICommand ConfirmFilterCommand => new RelayCommand(ConfirmFilter);
+
+        // Command for resetting recipe
         public ICommand ResetRecipeCommand => new RelayCommand(ResetRecipe);
 
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method confirms a filter and applies it to the list of recipes
         private void ConfirmFilter(object parameter)
         {
             string filterValue = string.Empty;
@@ -195,9 +220,9 @@ namespace WpfApp_Part3_POE.ViewModels
                     FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
                     break;
             }
-
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method provides a menu of filter options to select and gets user input
         private string PromptUserForFoodGroup()
         {
             string input = Microsoft.VisualBasic.Interaction.InputBox(
@@ -214,7 +239,8 @@ namespace WpfApp_Part3_POE.ViewModels
 
             return SelectedFoodGroup(input);
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method sets the filter value for food group based on user input
         private string SelectedFoodGroup(string input)
         {
             switch (input)
@@ -238,12 +264,14 @@ namespace WpfApp_Part3_POE.ViewModels
                     return null;
             }
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method provides an input prompt to enter filter details
         private string PromptUserForInput(string message)
         {
             return Interaction.InputBox(message, "Filter Input", "");
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method resets the selected recipes ingredient details back to the original values using saved variables 
         private void ResetRecipe(object parameter)
         {
             if (SelectedRecipe != null)
@@ -274,27 +302,31 @@ namespace WpfApp_Part3_POE.ViewModels
                 MessageBox.Show("Please select a recipe to reset.");
             }
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method clears the filter and recipe list selections for returning to the view
         public void ClearSelections()
         {
             SelectedFilter = "None";
             SelectedRecipe = null;
-           /* SelectedScalingFactor = null;*/ // Clear scaling factor selection if applicable
-            //OnPropertyChanged(nameof(SelectedFilter));
-            //OnPropertyChanged(nameof(SelectedRecipe));
-            //OnPropertyChanged(nameof(SelectedScalingFactor));
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------//
 
+        // Event handler for property changes
         public event PropertyChangedEventHandler PropertyChanged;
 
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method triggers property change notifications
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method refreshes the recipe list 
         public void RefreshRecipeList()
         {
             FilteredRecipes = new ObservableCollection<RecipeClass>(_recipeManager.getOrderedRecipes(_recipeManager.recipeList));
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------//
     }
 }
+//--------------------------------------------------------X END OF FILE X-------------------------------------------------------------------//

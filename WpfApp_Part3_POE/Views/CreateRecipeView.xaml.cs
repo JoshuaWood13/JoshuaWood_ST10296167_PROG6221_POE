@@ -16,23 +16,11 @@ using WpfApp_Part3_POE.ViewModels;
 
 namespace WpfApp_Part3_POE.Views
 {
-    /// <summary>
-    /// Interaction logic for View1.xaml
-    /// </summary>
     public partial class CreateRecipeView : UserControl
     {
         public CreateRecipeView()
         {
             InitializeComponent();
-
-            //// Bind the InputPanel to the IngredientInputs collection
-            //var inputPanelBinding = new Binding
-            //{
-            //    Source = DataContext,
-            //    Path = new PropertyPath("IngredientInputs")
-            //};
-
-            //BindingOperations.SetBinding(InputPanel, ItemsControl.ItemsSourceProperty, inputPanelBinding);
         }
     }
 }

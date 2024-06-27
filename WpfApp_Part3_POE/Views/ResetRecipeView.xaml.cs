@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace WpfApp_Part3_POE.Views
 {
-    /// <summary>
-    /// Interaction logic for ResetRecipeView.xaml
-    /// </summary>
     public partial class ResetRecipeView : UserControl
     {
         public ResetRecipeView()

@@ -16,15 +16,11 @@ using WpfApp_Part3_POE.ViewModels;
 
 namespace WpfApp_Part3_POE.Views
 {
-    /// <summary>
-    /// Interaction logic for View3.xaml
-    /// </summary>
     public partial class ScaleRecipeView : UserControl
     {
         public ScaleRecipeView()
         {
             InitializeComponent();
-            //DataContext = new View3ViewModel();
         }
     }
 }

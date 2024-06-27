@@ -16,15 +16,11 @@ using WpfApp_Part3_POE.ViewModels;
 
 namespace WpfApp_Part3_POE.Views
 {
-    /// <summary>
-    /// Interaction logic for View2.xaml
-    /// </summary>
     public partial class DisplayRecipeView : UserControl
     {
         public DisplayRecipeView()
         {
             InitializeComponent();
-            //DataContext = new View2ViewModel();
         }
     }
 }

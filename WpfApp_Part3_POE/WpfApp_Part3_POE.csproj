@@ -69,10 +69,6 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ResetRecipeViewModel.cs" />
     <Compile Include="ViewModels\ScaleRecipeViewModel.cs" />
-    <Compile Include="ViewModels\View1ViewModel.cs" />
-    <Compile Include="ViewModels\View2ViewModel.cs" />
-    <Compile Include="ViewModels\View3ViewModel.cs" />
-    <Compile Include="ViewModels\View4ViewModel.cs" />
     <Compile Include="Views\ResetRecipeView.xaml.cs">
       <DependentUpon>ResetRecipeView.xaml</DependentUpon>
     </Compile>

@@ -1,4 +1,12 @@
-﻿using System;
+﻿// Name: Joshua Wood
+// Student number: ST10296167
+// Group: 2
+
+// References: 
+// Exploratorium. 2024. Measurement Equivalents. Available at: https://www.exploratorium.edu/food/measurements
+// SweetLife. 2022. What are the different food groups? A simple explanation. Available at: https://sweetlife.org.za/what-are-the-different-food-groups-a-simple-explanation/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,79 +31,6 @@ namespace WpfApp_Part3_POE.Classes
         public string originalunitName { get; set; } //Stores the original measurement unit assigned to ingredient
 
         //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method prompts the user to choose a measurment unit to assign to an ingredient. They are provided with a menu of choices and are
-        //continously prompted until they choose a valid unit
-        //public string decideUnit()
-        //{
-        //    //This variable stores a user's choice
-        //    string choice;
-
-        //    //Displaying the measurement unit menu
-        //    Console.WriteLine("Please select the unit of measurement:");
-        //    Console.WriteLine("1) Teaspoons (tsp) ");
-        //    Console.WriteLine("2) Tablespoons (tbsp)");
-        //    Console.WriteLine("3) Cups (C)");
-        //    Console.WriteLine("4) Grams (g)");
-        //    Console.WriteLine("5) Kilograms (kg)");
-        //    Console.WriteLine();
-
-        //    //This do while loop prompts the user to enter a valid menu choice and passes the user's input to the validChoice method to determine
-        //    //when a valid selection has been made 
-        //    do
-        //    {
-        //        Console.Write("Enter choice: ");
-        //        //Assigns user input to choice variable
-        //        choice = Console.ReadLine();
-
-        //        //If a valid number is not entered the user will be prompted again
-        //        if (!validChoice(choice, 1, 5))
-        //        {
-        //            Console.WriteLine();
-        //            Console.WriteLine("Please enter a number between 1 and 5!");
-        //            Console.WriteLine();
-        //        }
-        //        //User will keep being prompted until they make a valid choice
-        //    } while (!validChoice(choice, 1, 5));
-
-        //    return choice;
-        //}
-        //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method prompts the user to choose a food group to assign to an ingredient. They are provided with a menu of choices and are
-        //continously prompted until they choose a valid unit
-        //public string decideFoodGroup()
-        //{
-        //    string choice;
-
-        //    //Displaying the food group menu
-        //    Console.WriteLine("Please select the Food Group:");
-        //    Console.WriteLine("1) Starchy foods");
-        //    Console.WriteLine("2) Vegetables and fruits");
-        //    Console.WriteLine("3) Dry beans, peas, lentils and soya");
-        //    Console.WriteLine("4) Chicken, fish, meat and eggs");
-        //    Console.WriteLine("5) Milk and dairy");
-        //    Console.WriteLine("6) Fats and oil");
-        //    Console.WriteLine("7) Water");
-        //    Console.WriteLine();
-
-        //    do
-        //    {
-        //        Console.Write("Enter choice: ");
-        //        //Assigns user input to choice variable
-        //        choice = Console.ReadLine();
-
-        //        //If a valid number is not entered the user will be prompted again
-        //        if (!validChoice(choice, 1, 7))
-        //        {
-        //            Console.WriteLine();
-        //            Console.WriteLine("Please enter a number between 1 and 7!");
-        //            Console.WriteLine();
-        //        }
-        //        //User will keep being prompted until they make a valid choice
-        //    } while (!validChoice(choice, 1, 7));
-
-        //    return choice;
-        //}
-        ////------------------------------------------------------------------------------------------------------------------------------------------//
         //This method takes a user's valid choice as the input parameter, to assign the correct measurement unit name and value to the ingredientClass object i parameter
         public void assignUnit(IngredientsClass i, string selection)
         {
@@ -163,17 +98,6 @@ namespace WpfApp_Part3_POE.Classes
                     i.ingredientFoodGroup = "Water";
                     break;
             }
-        }
-        //------------------------------------------------------------------------------------------------------------------------------------------//
-        //This method takes a user's choice as a string parameter and attempts to convert it into an integer.
-        //If that succeeds and the int falls in the specified number range (1-5) the method returns true else it retuns false
-        private static bool validChoice(string choice, int min, int max)
-        {
-            //Stores converted integer from user's choice
-            int num;
-            bool valid = int.TryParse(choice, out num);
-            //Only retuns true if conversion from string is succesfull and num is between 1 and 5
-            return valid && num >= min && num <= max;
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------//
         //This method scales the ingredient i based off the scaling factor from the scaling parameter decided by user. The ml and gram values

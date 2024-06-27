@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Name: Joshua Wood
+// Student number: ST10296167
+// Group: 2
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +13,7 @@ namespace WpfApp_Part3_POE.ViewModels
 {
     public class MainWindowViewModel
     {
+        // Declaring variables
         public CreateRecipeViewModel CreateRecipeViewModel { get; private set; }
         public DisplayRecipeViewModel DisplayRecipeViewModel { get; private set; }
         public ScaleRecipeViewModel ScaleRecipeViewModel { get; private set; }
@@ -16,19 +21,20 @@ namespace WpfApp_Part3_POE.ViewModels
         public DeleteRecipeViewModel DeleteRecipeViewModel { get; private set; }
 
         private RecipeManagerClass recipeManager;
-        //private bool isCreateRecipeTabInitialized;
 
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // Constructor
         public MainWindowViewModel()
         {
             recipeManager = new RecipeManagerClass();
 
             // Add some sample recipes for testing
-            var sampleRecipe1 = new RecipeClass { recipeName = "Pasta", recipeCalorieTotal = 250 };
+            var sampleRecipe1 = new RecipeClass { recipeName = "Example Recipe", recipeCalorieTotal = 250 };
             var sampleRecipe2 = new RecipeClass { recipeName = "Salad", recipeCalorieTotal = 10 };
 
             recipeManager.addRecipe(sampleRecipe1);
             recipeManager.addRecipe(sampleRecipe2);
-            //var recipeManager = new RecipeManagerClass();
+
             CreateRecipeViewModel = new CreateRecipeViewModel(recipeManager);
             DisplayRecipeViewModel = new DisplayRecipeViewModel(recipeManager);
             ScaleRecipeViewModel = new ScaleRecipeViewModel(recipeManager);
@@ -37,7 +43,8 @@ namespace WpfApp_Part3_POE.ViewModels
 
             CreateRecipeViewModel.RecipeSubmitted += CreateRecipeViewModel_RecipeSubmitted;
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method refreshees the recipe list in all views to ensure it is updated with the new created recipe
         private void CreateRecipeViewModel_RecipeSubmitted(object sender, EventArgs e)
         {
             ResetCreateRecipeViewModel();
@@ -46,25 +53,20 @@ namespace WpfApp_Part3_POE.ViewModels
             ResetRecipeViewModel.RefreshRecipeList();
             DeleteRecipeViewModel.RefreshRecipeList();
         }
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method resets the create recipe view in order to add a new recipe after creation
         public void ResetCreateRecipeViewModel()
         {
             CreateRecipeViewModel = new CreateRecipeViewModel(recipeManager);
             CreateRecipeViewModel.RecipeSubmitted += CreateRecipeViewModel_RecipeSubmitted;
         }
-
-        //public void InitializeCreateRecipeTab()
-        //{
-        //    if (!isCreateRecipeTabInitialized)
-        //    {
-        //        ResetCreateRecipeViewModel();
-        //        isCreateRecipeTabInitialized = true;
-        //    }
-        //}
-
+        //------------------------------------------------------------------------------------------------------------------------------------------//
+        // This method clears the displayed text of a recipe
         public void ClearDisplayedRecipe()
         {
             DisplayRecipeViewModel.ClearDisplayedRecipe();
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------//
     }
 }
+//--------------------------------------------------------X END OF FILE X-------------------------------------------------------------------//
