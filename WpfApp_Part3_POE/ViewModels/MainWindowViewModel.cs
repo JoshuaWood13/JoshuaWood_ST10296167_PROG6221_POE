@@ -28,13 +28,6 @@ namespace WpfApp_Part3_POE.ViewModels
         {
             recipeManager = new RecipeManagerClass();
 
-            // Add some sample recipes for testing
-            var sampleRecipe1 = new RecipeClass { recipeName = "Example Recipe", recipeCalorieTotal = 250 };
-            var sampleRecipe2 = new RecipeClass { recipeName = "Salad", recipeCalorieTotal = 10 };
-
-            recipeManager.addRecipe(sampleRecipe1);
-            recipeManager.addRecipe(sampleRecipe2);
-
             CreateRecipeViewModel = new CreateRecipeViewModel(recipeManager);
             DisplayRecipeViewModel = new DisplayRecipeViewModel(recipeManager);
             ScaleRecipeViewModel = new ScaleRecipeViewModel(recipeManager);
